@@ -29,8 +29,8 @@ namespace signalR.Utils.JWT
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Audience = _configuration["JwtSettings:NombreAudiencia"],
-                Issuer = _configuration["JwtSettings:NombreAudiencia"],
+                Audience = _configuration["JwtSettings:Audience"],
+                Issuer = _configuration["JwtSettings:Issuer"],
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:TimeLifeMinutes"])),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

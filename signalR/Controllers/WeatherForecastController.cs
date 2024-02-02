@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using signalR.SignalR;
+using signalR.Utils.JWT;
 
 namespace signalR.Controllers
 {
@@ -14,30 +14,37 @@ namespace signalR.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IHubContext<NotificationsHub> _hubContext;
+        private readonly IJWT _jWT;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IHubContext<NotificationsHub> hubContext)
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IJWT jWT)
         {
             _logger = logger;
-            _hubContext = hubContext;
+            _jWT = jWT;
+
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        [Route("{user}")]
-        public IEnumerable<WeatherForecast> Get([FromQuery] string user)
+        public IActionResult Get()
         {
-            if (user is not null || user != "") {
-                _hubContext.Clients.Clients(user).SendAsync("ReceiveMessage", user, "esto es una pruba de mensaje");
-            }
-           
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+
+            string token = _jWT.generateToken(new Models.User()
             {
-                  
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                name = "alejandro",
+                email = "alejandropuentes@gmail.com",
+                login = "LAPA14"
+            });
+
+            return Ok(token);
+        }
+
+
+        [HttpPost(Name = "testAuthorize")]
+        [Authorize]
+        public IActionResult testAuthorize()
+        {
+            string token = "alejandro eres el mejor";
+            return Ok(token);
         }
     }
 }
