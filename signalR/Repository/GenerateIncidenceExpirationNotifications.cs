@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.FileProviders.Physical;
+﻿
+using Microsoft.Extensions.FileProviders.Physical;
 using Npgsql;
 using signalR.Repository.Implementation;
 
@@ -6,11 +7,17 @@ namespace signalR.Repository
 {
     public class GenerateIncidenceExpirationNotifications : IGenerateIncidenceExpirationNotifications
     {
-        public void SpGenerateIncidenceExpirationNotifications() {
+        private readonly IConfiguration _configuration;
+        public GenerateIncidenceExpirationNotifications(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
-            var connectionString = "Host=localhost;Username=postgres;Password=12345;Database=polariscore";
+        public void SpGenerateIncidenceExpirationNotifications()
+        {
 
-            using (var connecion = new NpgsqlConnection(connectionString)) {
+            using (var connecion = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]))
+            {
 
                 try
                 {
@@ -21,16 +28,15 @@ namespace signalR.Repository
                         command.ExecuteNonQuery();
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                    throw;
+                    Console.Error.WriteLine(e);
                 }
-               
-            
+
+
             }
-        
-        
+
+
         }
     }
 }

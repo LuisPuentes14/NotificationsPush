@@ -11,12 +11,16 @@ namespace signalR.Repository
 {
     public class GetNotificationsPush : IGetNotificationsPush
     {
+        private readonly IConfiguration _configuration;
+        public GetNotificationsPush(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
-        public List<Notification> GetNotificationsPushClients() {           
+        public List<Notification> GetNotificationsPushClients()
+        {
 
-            var connectionString = "Host=localhost;Username=postgres;Password=12345;Database=polariscore";
-
-            using (var connecion = new NpgsqlConnection(connectionString))
+            using (var connecion = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]))
             {
 
                 try
@@ -46,10 +50,11 @@ namespace signalR.Repository
 
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 
-                    throw;
+                    Console.Error.WriteLine(e);
+                    return null;
                 }
 
 
