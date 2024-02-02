@@ -2,17 +2,28 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using signalR.Models;
+using signalR.Repository.Implementation;
 using System.Collections.Concurrent;
+using System.Text.Json;
 
 namespace signalR.SignalR
 {
     //[Authorize]
     public class NotificationsHub : Hub
     {
-
-
-        //private static readonly ConcurrentDictionary<string, string> _users = new ConcurrentDictionary<string, string>();
+        private readonly IGetNotificationsPush _getNotificationsPush;
+        private readonly IConfiguration _configuration;
+        private readonly IDeleteNotificationPush _deleteNotificationPush;
         private static List<ClientActive> _users = new List<ClientActive>();
+
+        public NotificationsHub(IGetNotificationsPush getNotificationsPush,
+            IConfiguration configuration,
+             IDeleteNotificationPush deleteNotificationPush)
+        {
+            _getNotificationsPush = getNotificationsPush;
+            _configuration = configuration;
+            _deleteNotificationPush = deleteNotificationPush;
+        }
 
         public async Task SendMessage(string user, string message)
         {
@@ -23,9 +34,10 @@ namespace signalR.SignalR
         public override async Task OnConnectedAsync()
         {
             var user = Context.GetHttpContext()?.Request.Query["user"];
+            ClientActive clientActive = new ClientActive() { clientName = user, ConnectionId = Context.ConnectionId };
+            _users.Add(clientActive);
 
-            _users.Add(new ClientActive() { clientName = user, ConnectionId = Context.ConnectionId });
-            //_users.TryAdd(user, Context.ConnectionId);           
+            SendPendingNotifications(clientActive);
 
             await base.OnConnectedAsync();
         }
@@ -39,8 +51,22 @@ namespace signalR.SignalR
             await base.OnDisconnectedAsync(exception);
         }
 
-        public static List<ClientActive> GetConnectedClient() {
-          return  _users;
+        private void SendPendingNotifications(ClientActive clientActive)
+        {
+
+            List<Notification> listNotifications = _getNotificationsPush.GetNotificationsPushClients(clientActive.clientName);
+            foreach (Notification notification in listNotifications)
+            {
+                Clients.Client(clientActive.ConnectionId).SendAsync(_configuration["Hub:MethodClient"],
+                  JsonSerializer.Serialize(notification));
+                _deleteNotificationPush.DeleteNotificationsPushSent(notification.notification_id);
+            }
+
+        }
+
+        public static List<ClientActive> GetConnectedClient()
+        {
+            return _users;
         }
 
     }

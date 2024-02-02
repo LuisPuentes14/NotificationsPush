@@ -148,12 +148,12 @@
     </svg>
 
     <script>
-        var items = [];
+      var items = [];
       var itemsToKill = [];
       var items = [];
       var killTimeout = null;
 
-      function killNote( id,e) {
+      function killNote(id, e) {
         console.log("entre");
         const note = items.find((item) => item.id === id);
         const tar = e.target;
@@ -184,16 +184,16 @@
         }
       }
 
-      
-
       function spawnNote(obj) {
         const id = Math.random(0, 2 ** 32, true).toString(16);
         // const draw =  Math.random(0, this.messages.length - 1, true);
 
-       
+        console.log(obj)
+
         const message = {
           icon: "success",
-          title: obj.notification_send_push_login + "\n" + obj.notification_message,
+          title:
+            obj.notification_send_push_login + "\n" + obj.notification_message,
           actions: ["OK"],
         };
         const note = new Notification({
@@ -214,7 +214,7 @@
 
     <script>
       const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7229/notificationsHub?user=PASUY")
+        .withUrl("https://localhost:44354/notificationsHub?user=PASUY")
         .configureLogging(signalR.LogLevel.Information)
         .withAutomaticReconnect()
         .build();
@@ -230,15 +230,19 @@
       }
 
       connection.on("ReceiveMessage", (message) => {
-
         //console.log(message );
-       // alert(message);
+        // alert(message);
+
+        console.log(message);
 
         let objeto = JSON.parse(message);
 
         console.log(objeto);
 
-        spawnNote(objeto);
+        // objeto.forEach((obj) => {
+          spawnNote(objeto);
+        // });
+
         // const li = document.createElement("li");
         // li.textContent = `${user}: ${message}`;
         // document.getElementById("messageList").appendChild(li);
@@ -253,8 +257,6 @@
     </script>
 
     <script>
-    
-
       //-------------------
       // window.addEventListener("DOMContentLoaded", () => {
       //   //const nc = new NotificationCenter();

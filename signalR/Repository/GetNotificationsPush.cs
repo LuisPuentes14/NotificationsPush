@@ -17,7 +17,7 @@ namespace signalR.Repository
             _configuration = configuration;
         }
 
-        public List<Notification> GetNotificationsPushClients()
+        public List<Notification> GetNotificationsPushClients(string clientLogin)
         {
 
             using (var connecion = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]))
@@ -26,9 +26,11 @@ namespace signalR.Repository
                 try
                 {
                     connecion.Open();
-                    using (var command = new NpgsqlCommand("get_notifications_push", connecion))
+                    using (var command = new NpgsqlCommand("get_notifications_push_client", connecion))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        command.Parameters.AddWithValue("in_client_login", clientLogin);
                         command.Parameters.Add(new NpgsqlParameter("status", NpgsqlDbType.Boolean) { Direction = ParameterDirection.Output });
                         command.Parameters.Add(new NpgsqlParameter("notification", NpgsqlDbType.Text) { Direction = ParameterDirection.Output });
                         command.Parameters.Add(new NpgsqlParameter("message", NpgsqlDbType.Text) { Direction = ParameterDirection.Output });
@@ -52,14 +54,11 @@ namespace signalR.Repository
                 }
                 catch (Exception e)
                 {
-
                     Console.Error.WriteLine(e);
                     return null;
                 }
 
-
             }
-
 
         }
     }

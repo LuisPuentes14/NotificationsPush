@@ -16,12 +16,11 @@ namespace signalR.IOC
 
         public static void InyectarDependencia(this IServiceCollection services, IConfiguration Configuration)    
         {
-
             // Segregación de interfaces           
             services.AddSingleton<IGenerateIncidenceExpirationNotifications, GenerateIncidenceExpirationNotifications>();
             services.AddSingleton<IGetNotificationsPush, GetNotificationsPush>(); 
+            services.AddSingleton<IDeleteNotificationPush, DeleteNotificationPush>(); 
             services.AddSingleton<IJWT, JWT>();
-
 
         }
     }
