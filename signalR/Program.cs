@@ -5,6 +5,8 @@ using signalR.IOC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using signalR.Middleware;
+using midelware.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,7 +54,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins()
+            builder.WithOrigins("http://127.0.0.1:5500")
                 .AllowAnyHeader()
                 .WithMethods("GET", "POST")
                 .AllowCredentials();
@@ -72,6 +74,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<WebSocketsMiddleware>();
+app.UseMiddleware<LogMiddleware>();
+
 
 app.UseHttpsRedirection();
 

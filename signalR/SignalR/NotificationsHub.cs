@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using signalR.Models;
 using signalR.Repository.Implementation;
+using System;
 using System.Collections.Concurrent;
 using System.Text.Json;
 
 namespace signalR.SignalR
 {
-    //[Authorize]
+    [Authorize]
     public class NotificationsHub : Hub
     {
         private readonly IGetNotificationsPush _getNotificationsPush;
@@ -45,6 +47,7 @@ namespace signalR.SignalR
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             string user = Context.GetHttpContext()?.Request.Query["user"];
+
             ClientActive clients = _users.Where(x => x.clientName == user).FirstOrDefault();
             _users.Remove(clients);
 
