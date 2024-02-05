@@ -1,4 +1,4 @@
-﻿namespace signalR.Models
+﻿namespace signalR.Models.Local
 {
     public class ClientActive
     {

@@ -1,4 +1,4 @@
-﻿using signalR.Models;
+﻿using signalR.Models.Local;
 
 namespace signalR.Utils.JWT
 {

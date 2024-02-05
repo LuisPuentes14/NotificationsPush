@@ -1,4 +1,4 @@
-﻿namespace signalR.Models
+﻿namespace signalR.Models.Local
 {
     public class Notification
     {
@@ -6,6 +6,6 @@
         public string? notification_send_push_login { get; set; }
         public string? notification_message { get; set; }
         public DateTime notification_register_date { get; set; }
-        public string? notification_register_by { get; set; }       
+        public string? notification_register_by { get; set; }
     }
 }

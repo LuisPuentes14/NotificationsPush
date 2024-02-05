@@ -1,8 +1,8 @@
-﻿using signalR.Models;
+﻿using signalR.Models.Local;
 
 namespace signalR.Repository.Implementation
 {
-    public interface IGetNotificationsPush
+    public interface IGetNotificationsPushRepository
     {
        List<Notification> GetNotificationsPushClients(string clientLogin);
 

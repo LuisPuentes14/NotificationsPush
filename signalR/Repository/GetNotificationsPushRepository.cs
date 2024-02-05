@@ -3,16 +3,16 @@ using Newtonsoft.Json;
 using Npgsql;
 using Npgsql.Replication;
 using NpgsqlTypes;
-using signalR.Models;
+using signalR.Models.Local;
 using signalR.Repository.Implementation;
 using System.Data;
 
 namespace signalR.Repository
 {
-    public class GetNotificationsPush : IGetNotificationsPush
+    public class GetNotificationsPushRepository : IGetNotificationsPushRepository
     {
         private readonly IConfiguration _configuration;
-        public GetNotificationsPush(IConfiguration configuration)
+        public GetNotificationsPushRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }

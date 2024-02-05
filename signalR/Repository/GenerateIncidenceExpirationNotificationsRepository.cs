@@ -5,10 +5,10 @@ using signalR.Repository.Implementation;
 
 namespace signalR.Repository
 {
-    public class GenerateIncidenceExpirationNotifications : IGenerateIncidenceExpirationNotifications
+    public class GenerateIncidenceExpirationNotificationsRepository : IGenerateIncidenceExpirationNotificationsRepository
     {
         private readonly IConfiguration _configuration;
-        public GenerateIncidenceExpirationNotifications(IConfiguration configuration)
+        public GenerateIncidenceExpirationNotificationsRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }

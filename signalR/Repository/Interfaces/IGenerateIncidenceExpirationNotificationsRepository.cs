@@ -1,6 +1,6 @@
 ﻿namespace signalR.Repository.Implementation
 {
-    public interface IGenerateIncidenceExpirationNotifications
+    public interface IGenerateIncidenceExpirationNotificationsRepository
     {
         void SpGenerateIncidenceExpirationNotifications();    
     }

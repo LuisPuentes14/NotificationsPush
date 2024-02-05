@@ -1,6 +1,9 @@
 ﻿using signalR.Repository;
 using signalR.Repository.Implementation;
+using signalR.Repository.Interfaces;
 using signalR.Utils.JWT;
+using signalR.Services;
+using signalR.Services.Interfaces;
 
 namespace signalR.IOC
 {
@@ -18,10 +21,12 @@ namespace signalR.IOC
         {
 
             // Segregación de interfaces           
-            services.AddSingleton<IGenerateIncidenceExpirationNotifications, GenerateIncidenceExpirationNotifications>();
-            services.AddSingleton<IGetNotificationsPush, GetNotificationsPush>(); 
-            services.AddSingleton<IDeleteNotificationPush, DeleteNotificationPush>(); 
+            services.AddSingleton<IGenerateIncidenceExpirationNotificationsRepository, GenerateIncidenceExpirationNotificationsRepository>();
+            services.AddSingleton<IGetNotificationsPushRepository, GetNotificationsPushRepository>(); 
+            services.AddSingleton<IDeleteNotificationPushRepository, DeleteNotificationPushRepository>(); 
             services.AddSingleton<IJWT, JWT>();
+            services.AddSingleton<IAuthenticationRepository, AuthenticationRepository>(); 
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
 
         }

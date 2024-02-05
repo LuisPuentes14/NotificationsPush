@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using Npgsql;
-using signalR.Models;
+using signalR.Models.Local;
 using signalR.Repository;
 using signalR.Repository.Implementation;
 using signalR.SignalR;
@@ -20,23 +20,21 @@ namespace signalR.HostedServices
     {
 
         private readonly IHubContext<NotificationsHub> _notificationsHub;
-        private readonly IGenerateIncidenceExpirationNotifications _generateIncidenceExpirationNotifications;
-        private readonly IGetNotificationsPush _getNotificationsPush;
+        private readonly IGenerateIncidenceExpirationNotificationsRepository _generateIncidenceExpirationNotifications;
         private readonly IConfiguration _configuration;
-        private readonly IDeleteNotificationPush _deleteNotificationPush;
+        private readonly IDeleteNotificationPushRepository _deleteNotificationPush;
         private Timer _timer;
         private CancellationTokenSource _cts;
         private Task _executingTask;
 
         public NotificationsHostedService(IHubContext<NotificationsHub> notificationsHub,
-            IGenerateIncidenceExpirationNotifications generateIncidenceExpirationNotifications,
-            IGetNotificationsPush getNotificationsPush,
+            IGenerateIncidenceExpirationNotificationsRepository generateIncidenceExpirationNotifications,
+            IGetNotificationsPushRepository getNotificationsPush,
             IConfiguration configuration,
-            IDeleteNotificationPush deleteNotificationPush )
+            IDeleteNotificationPushRepository deleteNotificationPush )
         {
             _notificationsHub = notificationsHub;
             _generateIncidenceExpirationNotifications = generateIncidenceExpirationNotifications;
-            _getNotificationsPush = getNotificationsPush;
             _configuration = configuration;
             _deleteNotificationPush = deleteNotificationPush;
         }
@@ -74,13 +72,16 @@ namespace signalR.HostedServices
                 //se obtienen los clientes activos 
                 List<ClientActive> listClientsActives = NotificationsHub.GetConnectedClient();          
 
-                string[] InformationNotificationSend =  e.Payload.Split("*~*");                
+                string[] InformationNotificationSend =  e.Payload.Split("*~*");        
+                
+                // busca las sesiones que tiene activas un usuario, que un usuario puedo estar conectado desde difentes dispositivos
+                List <ClientActive> listClientActives = listClientsActives.Where(c => c.clientName == InformationNotificationSend[0]).ToList();
 
-                ClientActive clientActive = listClientsActives.Where(c => c.clientName == InformationNotificationSend[0]).FirstOrDefault();
-
-                if (clientActive is not null) {
-                   await _notificationsHub.Clients.Client(clientActive.ConnectionId).SendAsync(_configuration["Hub:MethodClient"], InformationNotificationSend[2]);
-                    _deleteNotificationPush.DeleteNotificationsPushSent( int.Parse(InformationNotificationSend[1]));
+                if (listClientActives.Count != 0) {
+                    foreach (var clientActive in listClientActives) {
+                        await _notificationsHub.Clients.Client(clientActive.ConnectionId).SendAsync(_configuration["Hub:MethodClient"], InformationNotificationSend[2]);
+                        _deleteNotificationPush.DeleteNotificationsPushSent(int.Parse(InformationNotificationSend[1]));
+                    }              
                 }
             };
 

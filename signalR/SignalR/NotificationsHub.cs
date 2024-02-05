@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using signalR.Models;
+using signalR.Models.Local;
 using signalR.Repository.Implementation;
 using System;
 using System.Collections.Concurrent;
@@ -13,14 +13,14 @@ namespace signalR.SignalR
     [Authorize]
     public class NotificationsHub : Hub
     {
-        private readonly IGetNotificationsPush _getNotificationsPush;
+        private readonly IGetNotificationsPushRepository _getNotificationsPush;
         private readonly IConfiguration _configuration;
-        private readonly IDeleteNotificationPush _deleteNotificationPush;
+        private readonly IDeleteNotificationPushRepository _deleteNotificationPush;
         private static List<ClientActive> _users = new List<ClientActive>();
 
-        public NotificationsHub(IGetNotificationsPush getNotificationsPush,
+        public NotificationsHub(IGetNotificationsPushRepository getNotificationsPush,
             IConfiguration configuration,
-             IDeleteNotificationPush deleteNotificationPush)
+             IDeleteNotificationPushRepository deleteNotificationPush)
         {
             _getNotificationsPush = getNotificationsPush;
             _configuration = configuration;

@@ -9,10 +9,10 @@ using System.Data;
 
 namespace signalR.Repository
 {
-    public class DeleteNotificationPush : IDeleteNotificationPush
+    public class DeleteNotificationPushRepository : IDeleteNotificationPushRepository
     {
         private readonly IConfiguration _configuration;
-        public DeleteNotificationPush(IConfiguration configuration)
+        public DeleteNotificationPushRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }

@@ -2,7 +2,7 @@
 
 namespace signalR.Repository.Implementation
 {
-    public interface IDeleteNotificationPush
+    public interface IDeleteNotificationPushRepository
     {
         void DeleteNotificationsPushSent(int notificationId);
 
