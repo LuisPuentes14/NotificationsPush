@@ -7,6 +7,9 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using signalR.Middleware;
 using midelware.Middlewares;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.Extensions.Configuration;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,10 +54,13 @@ builder.Services.AddHostedService<NotificationsHostedService>();
 
 builder.Services.AddCors(options =>
 {
+    
+   var AllowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins("http://127.0.0.1:5500")
+            builder.WithOrigins(AllowedOrigins)
                 .AllowAnyHeader()
                 .WithMethods("GET", "POST")
                 .AllowCredentials();
@@ -65,6 +71,15 @@ builder.Services.AddCors(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// redirecciona la peticiones http a https al puerto configurado
+builder.Services.Configure<HttpsRedirectionOptions>(options =>
+{
+    var url = builder.Configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>();
+    Uri uri = new Uri(url);   
+    options.HttpsPort = uri.Port;
+
+});
 
 var app = builder.Build();
 

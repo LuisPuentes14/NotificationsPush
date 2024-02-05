@@ -17,7 +17,7 @@ namespace signalR.Controllers
             _uthenticationService = uthenticationService;
         }
 
-        [HttpPost]
+        [HttpPost("Authentication")]
         public async Task< IActionResult> Authentication([FromBody] AuthenticationRequest authentication)
         {
 
