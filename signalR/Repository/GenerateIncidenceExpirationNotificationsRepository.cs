@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Extensions.FileProviders.Physical;
+using midelware.Singleton.Logger;
 using Npgsql;
 using signalR.Repository.Implementation;
 
@@ -30,13 +31,10 @@ namespace signalR.Repository
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine(e);
+                    Console.Error.WriteLine(e.Message);
+                    AppLogger.GetInstance().Info($"Error generate_incident_expiration_notification: {e.Message}");                    
                 }
-
-
             }
-
-
         }
     }
 }

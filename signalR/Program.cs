@@ -10,6 +10,8 @@ using midelware.Middlewares;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using System;
+using NLog.Web;
+using signalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,7 +83,17 @@ builder.Services.Configure<HttpsRedirectionOptions>(options =>
 
 });
 
+//builder.Logging.ClearProviders();
+builder.Host.UseNLog();
+
 var app = builder.Build();
+
+// imprime el banner 
+BannerApp.GenerateBanner();
+
+// valida la conexion a la base de datos y imprime el puerto con el que esta escuchando la app
+var miServicio = app.Services.GetRequiredService<ValidateAppParameters>();
+miServicio.ValidateParameters();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using midelware.Singleton.Logger;
 using signalR.Models.Local;
 using signalR.Repository.Implementation;
 using System;
@@ -39,6 +40,8 @@ namespace signalR.SignalR
             ClientActive clientActive = new ClientActive() { clientName = user, ConnectionId = Context.ConnectionId };
             _users.Add(clientActive);
 
+            AppLogger.GetInstance().Info($"Cliente conectado nombre :{clientActive.clientName}, id :{clientActive.ConnectionId} .");
+
             SendPendingNotifications(clientActive);
 
             await base.OnConnectedAsync();
@@ -48,8 +51,10 @@ namespace signalR.SignalR
         {
             string user = Context.GetHttpContext()?.Request.Query["user"];
 
-            ClientActive clients = _users.Where(x => x.clientName == user).FirstOrDefault();
+            ClientActive clients = _users.Where(x => x.clientName == user && x.ConnectionId == Context.ConnectionId).FirstOrDefault();
             _users.Remove(clients);
+
+            AppLogger.GetInstance().Info($"Cliente desconectado nombre :{clients.clientName}, id :{clients.ConnectionId} .");
 
             await base.OnDisconnectedAsync(exception);
         }

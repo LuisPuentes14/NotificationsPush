@@ -16,14 +16,15 @@ namespace signalR.Repository
             _configuration = configuration;
         }
 
-        public async Task< SPValidateAuthenticationUser> ValidateAuthenticationUser(User user)
+        public async Task<SPValidateAuthenticationUser> ValidateAuthenticationUser(User user)
         {
             SPValidateAuthenticationUser validateAuthenticationUser = new SPValidateAuthenticationUser();
 
-            using (var connecion = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]))
+
+            try
             {
 
-                try
+                using (var connecion = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]))
                 {
                     connecion.Open();
                     using (var command = new NpgsqlCommand("validate_authentication_user", connecion))
@@ -40,22 +41,23 @@ namespace signalR.Repository
 
                         await command.ExecuteNonQueryAsync();
 
-                        validateAuthenticationUser.status = (bool)command.Parameters["out_status"].Value;
-                        validateAuthenticationUser.message = (string)command.Parameters["out_message"].Value;
-                        validateAuthenticationUser.email = (string)command.Parameters["out_email"].Value;
-                        validateAuthenticationUser.name = (string)command.Parameters["out_name"].Value;
+                        validateAuthenticationUser.status = (bool) command.Parameters["out_status"].Value ;
+                        validateAuthenticationUser.message = command.Parameters["out_message"].Value.ToString();
+                        validateAuthenticationUser.email = command.Parameters["out_email"].Value.ToString();                       
+                        validateAuthenticationUser.name = command.Parameters["out_name"].Value.ToString();
 
                     }
 
-                    
                 }
-                catch (Exception e)
-                {
-                    Console.Error.WriteLine(e);
-                }
-
-                return validateAuthenticationUser;
             }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                throw new Exception($"Error: {e.Message}");
+            }
+
+            return validateAuthenticationUser;
         }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using midelware.Singleton.Logger;
 using Newtonsoft.Json;
 using Npgsql;
 using Npgsql.Replication;
@@ -19,6 +20,8 @@ namespace signalR.Repository
 
         public List<Notification> GetNotificationsPushClients(string clientLogin)
         {
+
+            List<Notification> list = new List<Notification>();
 
             using (var connecion = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]))
             {
@@ -44,19 +47,19 @@ namespace signalR.Repository
                         if (!status)
                         {
                             Console.WriteLine(message);
-                            return null;
+                            return list;
                         }
 
-                        List<Notification> list = JsonConvert.DeserializeObject<List<Notification>>(notifications);
-                        return list;
-
+                        list = JsonConvert.DeserializeObject<List<Notification>>(notifications);
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine(e);
-                    return null;
+                    Console.Error.WriteLine(e.Message);
+                    AppLogger.GetInstance().Info($"Error get_notifications_push_client: {e.Message}");
                 }
+
+                return list;
 
             }
 

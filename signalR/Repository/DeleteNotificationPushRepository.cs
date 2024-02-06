@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using midelware.Singleton.Logger;
 using Newtonsoft.Json;
 using Npgsql;
 using Npgsql.Replication;
@@ -31,14 +32,15 @@ namespace signalR.Repository
 
                         command.Parameters.AddWithValue("notification_id", notificatioId);
 
-                        command.ExecuteNonQuery();                                  
+                        command.ExecuteNonQuery();
 
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine(e);
-                                   }
+                    Console.Error.WriteLine(e.Message);
+                    AppLogger.GetInstance().Info($"Error eliminando notificacion push :{e.Message}.");
+                }
 
 
             }

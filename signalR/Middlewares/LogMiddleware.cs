@@ -67,9 +67,9 @@ namespace midelware.Middlewares
 
                         stringBuilder.AppendLine($"Response");
                         stringBuilder.AppendLine($"_______________________________________");
-                        stringBuilder.AppendLine($"status code: {context.Response.StatusCode}");                     
+                        stringBuilder.AppendLine($"status code: {context.Response.StatusCode}");
                         stringBuilder.AppendLine($"------------------------------------------------------------");
-                        //AppLogger.GetInstance().Info(stringBuilder.ToString());
+                        AppLogger.GetInstance().Info(stringBuilder.ToString());
 
                         Console.WriteLine(stringBuilder.ToString());
 
@@ -86,7 +86,7 @@ namespace midelware.Middlewares
                 //------------------------------------------------------------------
 
                 // Llamada al siguiente middleware en la cadena
-                await _next(context);               
+                await _next(context);
 
                 //se Obtiene el body de respuesta
                 responseBodyStream.Seek(0, SeekOrigin.Begin);
@@ -104,7 +104,7 @@ namespace midelware.Middlewares
 
 
                 // Registra la transaccion en el log
-                // AppLogger.GetInstance().Info(stringBuilder.ToString());
+                AppLogger.GetInstance().Info(stringBuilder.ToString());
                 Console.WriteLine(stringBuilder.ToString());
 
                 // Copiando de nuevo el stream de respuesta al original
@@ -124,7 +124,7 @@ namespace midelware.Middlewares
                 stringBuilder.AppendLine($"------------------------------------------------------------");
                 Console.WriteLine(stringBuilder.ToString());
 
-                //  AppLogger.GetInstance().Error(stringBuilder.ToString());                
+                AppLogger.GetInstance().Error(stringBuilder.ToString());
                 return;
             }
 
