@@ -15,8 +15,10 @@ using signalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Convierte la aplicacion en servicio de windows
+builder.Host.UseWindowsService();
 
+// Add services to the container.
 builder.Services.AddControllers();
 
 
@@ -86,7 +88,11 @@ builder.Services.Configure<HttpsRedirectionOptions>(options =>
 //builder.Logging.ClearProviders();
 builder.Host.UseNLog();
 
+
+
 var app = builder.Build();
+
+
 
 // imprime el banner 
 BannerApp.GenerateBanner();

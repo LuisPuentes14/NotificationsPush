@@ -1,0 +1,11 @@
+
+---instala el servicio
+sc create "notifications_push" binPath="C:\Users\Alejandro\source\repos\signalR\signalR\bin\Release\net6.0\signalR.exe"
+
+---inicia el servicio
+sc start "notifications_push"
+
+---elimina el servicio
+sc delete "notifications_push"
+
+
