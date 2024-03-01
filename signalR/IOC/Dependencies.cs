@@ -21,11 +21,12 @@ namespace signalR.IOC
             // Segregación de interfaces           
             services.AddSingleton<ValidateAppParameters>();
             services.AddSingleton<IGenerateIncidenceExpirationNotificationsRepository, GenerateIncidenceExpirationNotificationsRepository>();
-            services.AddSingleton<IGetNotificationsPushRepository, GetNotificationsPushRepository>(); 
+            services.AddSingleton<INotificationsRepository, NotificationsRepository>(); 
             services.AddSingleton<IDeleteNotificationPushRepository, DeleteNotificationPushRepository>(); 
             services.AddSingleton<IJWT, JWT>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>(); 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<INotificationsService, NotificationsService>();
         }
     }
 }

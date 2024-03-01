@@ -77,13 +77,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // redirecciona la peticiones http a https al puerto configurado
-builder.Services.Configure<HttpsRedirectionOptions>(options =>
-{
-    var url = builder.Configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>();
-    Uri uri = new Uri(url);   
-    options.HttpsPort = uri.Port;
+//builder.Services.Configure<HttpsRedirectionOptions>(options =>
+//{
+//    var url = builder.Configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>();
+//    Uri uri = new Uri(url);   
+//    options.HttpsPort = uri.Port;
 
-});
+//});
 
 //builder.Logging.ClearProviders();
 builder.Host.UseNLog();

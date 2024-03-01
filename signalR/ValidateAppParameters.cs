@@ -42,14 +42,14 @@ namespace signalR
 
         public void ListenPort()
         {
-            var urlHttps = _configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>();
+            //var urlHttps = _configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>();
             var urlHttp = _configuration.GetSection("Kestrel:Endpoints:Http:Url").Get<string>();
 
-            Uri uriHttps = new Uri(urlHttps);
+            //Uri uriHttps = new Uri(urlHttps);
             Uri uriHttp = new Uri(urlHttp);
 
             AppLogger.GetInstance().Info($"Escuchando en el puerto HTTP :{uriHttp.Port}.");
-            AppLogger.GetInstance().Info($"Escuchando en el puerto HTTPS :{uriHttps.Port}.");
+            //AppLogger.GetInstance().Info($"Escuchando en el puerto HTTPS :{uriHttps.Port}.");
         }
 
 

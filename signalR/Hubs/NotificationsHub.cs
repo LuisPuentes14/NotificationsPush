@@ -14,12 +14,12 @@ namespace signalR.SignalR
     [Authorize]
     public class NotificationsHub : Hub
     {
-        private readonly IGetNotificationsPushRepository _getNotificationsPush;
+        private readonly INotificationsRepository _getNotificationsPush;
         private readonly IConfiguration _configuration;
         private readonly IDeleteNotificationPushRepository _deleteNotificationPush;
         private static List<ClientActive> _users = new List<ClientActive>();
 
-        public NotificationsHub(IGetNotificationsPushRepository getNotificationsPush,
+        public NotificationsHub(INotificationsRepository getNotificationsPush,
             IConfiguration configuration,
              IDeleteNotificationPushRepository deleteNotificationPush)
         {
@@ -59,10 +59,10 @@ namespace signalR.SignalR
             await base.OnDisconnectedAsync(exception);
         }
 
-        private void SendPendingNotifications(ClientActive clientActive)
+        private async void SendPendingNotifications(ClientActive clientActive)
         {
 
-            List<Notification> listNotifications = _getNotificationsPush.GetNotificationsPushClients(clientActive.clientName);
+            List<Notification> listNotifications =  await _getNotificationsPush.GetNotifications(clientActive.clientName);
             foreach (Notification notification in listNotifications)
             {
                 Clients.Client(clientActive.ConnectionId).SendAsync(_configuration["Hub:MethodClient"],

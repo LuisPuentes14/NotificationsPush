@@ -2,9 +2,9 @@
 
 namespace signalR.Repository.Implementation
 {
-    public interface IGetNotificationsPushRepository
+    public interface INotificationsRepository
     {
-       List<Notification> GetNotificationsPushClients(string clientLogin);
+      Task< List<Notification>> GetNotifications(string clientLogin);
 
     }
 }

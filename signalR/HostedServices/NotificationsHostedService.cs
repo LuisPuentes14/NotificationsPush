@@ -29,7 +29,7 @@ namespace signalR.HostedServices
 
         public NotificationsHostedService(IHubContext<NotificationsHub> notificationsHub,
             IGenerateIncidenceExpirationNotificationsRepository generateIncidenceExpirationNotifications,
-            IGetNotificationsPushRepository getNotificationsPush,
+            INotificationsRepository getNotificationsPush,
             IConfiguration configuration,
             IDeleteNotificationPushRepository deleteNotificationPush )
         {

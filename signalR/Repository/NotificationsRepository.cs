@@ -10,15 +10,15 @@ using System.Data;
 
 namespace signalR.Repository
 {
-    public class GetNotificationsPushRepository : IGetNotificationsPushRepository
+    public class NotificationsRepository : INotificationsRepository
     {
         private readonly IConfiguration _configuration;
-        public GetNotificationsPushRepository(IConfiguration configuration)
+        public NotificationsRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public List<Notification> GetNotificationsPushClients(string clientLogin)
+        public async Task<List<Notification>> GetNotifications(string clientLogin)
         {
 
             List<Notification> list = new List<Notification>();
@@ -29,18 +29,18 @@ namespace signalR.Repository
                 try
                 {
                     connecion.Open();
-                    using (var command = new NpgsqlCommand("get_notifications_push_client", connecion))
+                    using (var command = new NpgsqlCommand("get_notifications", connecion))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("in_client_login", clientLogin);
+                        command.Parameters.AddWithValue("in_login", clientLogin);
                         command.Parameters.Add(new NpgsqlParameter("status", NpgsqlDbType.Boolean) { Direction = ParameterDirection.Output });
                         command.Parameters.Add(new NpgsqlParameter("notification", NpgsqlDbType.Text) { Direction = ParameterDirection.Output });
                         command.Parameters.Add(new NpgsqlParameter("message", NpgsqlDbType.Text) { Direction = ParameterDirection.Output });
 
-                        command.ExecuteNonQuery();
+                        await command.ExecuteNonQueryAsync();
 
-                        bool status = (bool)command.Parameters["status"].Value;
+                        var status = (bool)command.Parameters["status"].Value;
                         string notifications = (string)command.Parameters["notification"].Value;
                         string message = (string)command.Parameters["message"].Value;
 

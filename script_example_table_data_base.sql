@@ -32,7 +32,7 @@ BEGIN
     notification_to_send_json := (SELECT
                                       JSONB_BUILD_OBJECT(
                                                           'notification_id', NEW.notification_id,
-                                                          'notification_send_push_login',  NEW.notification_send_push_login,
+                                                          'notification_send_login',  NEW.notification_send_push_login,
                                                           'notification_message',  NEW.notification_send_push_message,
                                                           'notification_register_date',  NEW.notification_send_push_date,
                                                           'notification_register_by',  NEW.notification_send_push_register_by)
@@ -50,8 +50,8 @@ CREATE OR REPLACE TRIGGER trigger_send_notification_push
     AFTER INSERT ON polaris_core.notifications_send_push
 FOR EACH ROW EXECUTE FUNCTION send_notification_push();
 
-CREATE OR REPLACE PROCEDURE polaris_core.get_notifications_push_client(
-    in_client_login VARCHAR(255),
+CREATE OR REPLACE PROCEDURE polaris_core.get_notifications(
+    IN in_login TEXT,
     OUT status BOOLEAN,
     OUT notification TEXT,
     OUT message TEXT
@@ -61,7 +61,7 @@ AS
 $BODY$
     --
 -----------------------------------------------------------------------
---Objetivo: obtener las notificaciones push que se van a enviar al usuario
+--Objetivo: obtener las notificaciones que tiene el usuario
 -----------------------------------------------------------------------
 DECLARE
     code_error         TEXT DEFAULT ''; -- varible para almacenar codigos de errores
@@ -81,26 +81,35 @@ DECLARE
 
 
 BEGIN
+
+    in_parameters := 'in_login:' || polaris_core.any_element_to_string(in_login);
+
     -- se registra inicio de transactions
-    id_log := register_log_entry('API',
-                                 'get_notifications_push',
-                                 'NA');
+    id_log := register_log_entry(polaris_core.any_element_to_string(in_login),
+                                 'request_get_notifications',
+                                 in_parameters);
 
     BEGIN
+        --valida que el que el tecnico no venga vacio
+        IF in_login IS NULL OR in_login = '' THEN
+            RAISE EXCEPTION 'Error: el parametro  in_login no pueder ir vacio.' USING ERRCODE = error_code_checked;
+        END IF;
 
+        --valida que el usuario exista
+        IF NOT EXISTS(SELECT 1 FROM polaris_core.sec_users WHERE login = in_login) THEN
+            RAISE EXCEPTION 'Error: el usuario "%" no existe.', in_login USING ERRCODE = error_code_checked;
+        END IF;
 
-
-        --se obtienen las notificaciones de los usuarios en formato JSON
+        --se obtienen las notificaciones del usuario en formato JSON
         notification := (SELECT JSONB_AGG(
                                         JSONB_BUILD_OBJECT(
                                                 'notification_id', notification_id,
-                                                'notification_send_push_login', notification_send_push_login,
-                                                'notification_message', notification_send_push_message,
-                                                'notification_register_date', notification_send_push_date,
-                                                'notification_register_by', notification_send_push_register_by))
-                         FROM polaris_core.notifications_send_push
-                         WHERE notification_send_push_login =in_client_login
-        );
+												'notification_send_login', notification_login,
+                                                'notification_message', notification_message,
+                                                'notification_register_date', notification_register_date,
+                                                'notification_register_by', notification_register_by))
+                         FROM polaris_core.notifications
+                         WHERE notification_login = in_login);
 
         --si no se no tiene notificaciones se envia un array vacio
         IF notification IS NULL THEN
@@ -180,6 +189,7 @@ BEGIN
     END;
 END ;
 $BODY$;
+
 
 
 CREATE OR REPLACE PROCEDURE polaris_core.validate_authentication_user(
