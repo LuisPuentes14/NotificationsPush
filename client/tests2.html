@@ -93,7 +93,7 @@
       const message = {
         icon: "success",
         title:
-          obj.notification_send_push_login + "\n" + obj.notification_message,
+          obj.notification_send_login + "\n" + obj.notification_message,
         actions: ["OK"],
       };
       const note = new Notification({
@@ -114,7 +114,7 @@
 
   <script>
 
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJBRE1JTiIsImVtYWlsIjoid2lsbGlhbXNhbmNoZXpAd3Bvc3MuY29tIiwidW5pcXVlX25hbWUiOiJXSUxMSUFNIEpPU0UgU0FOQ0hFWiBBTFZBUkVaIiwibmJmIjoxNzA5MzI0ODg1LCJleHAiOjE3MDkzMjU0ODUsImlhdCI6MTcwOTMyNDg4NSwiaXNzIjoiTm9tYnJlRW1pc29yIiwiYXVkIjoiTm9tYnJlQXVkaWVuY2lhIn0.N28Juht2p3vYDeBLdv4q8NVPaML_XnaqckEUPVFMEf4';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJBRE1JTiIsImVtYWlsIjoid2lsbGlhbXNhbmNoZXpAd3Bvc3MuY29tIiwidW5pcXVlX25hbWUiOiJXSUxMSUFNIEpPU0UgU0FOQ0hFWiBBTFZBUkVaIiwibmJmIjoxNzA5NTc4MjY3LCJleHAiOjE3MDk1Nzg4NjcsImlhdCI6MTcwOTU3ODI2NywiaXNzIjoiTm9tYnJlRW1pc29yIiwiYXVkIjoiTm9tYnJlQXVkaWVuY2lhIn0.Oi3PCBcHY06MlClmn6VC9BMk8FVnmdGP1OuePJslkt4';
     const connection = new signalR.HubConnectionBuilder()
       .withUrl("http://localhost:5400/notificationsHub?user=PASUY&access_token="+token)
       .configureLogging(signalR.LogLevel.Information)

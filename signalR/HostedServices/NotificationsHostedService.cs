@@ -19,29 +19,26 @@ namespace signalR.HostedServices
     public class NotificationsHostedService : IHostedService, IDisposable
     {
 
-        private readonly IHubContext<NotificationsHub> _notificationsHub;
-        private readonly IGenerateIncidenceExpirationNotificationsRepository _generateIncidenceExpirationNotifications;
+        private readonly IHubContext<NotificationsHub> _notificationsHub;   
         private readonly IConfiguration _configuration;
-        private readonly IDeleteNotificationPushRepository _deleteNotificationPush;
+        private readonly INotificationRepository _notificationRepository;
         private Timer _timer;
         private CancellationTokenSource _cts;
         private Task _executingTask;
 
-        public NotificationsHostedService(IHubContext<NotificationsHub> notificationsHub,
-            IGenerateIncidenceExpirationNotificationsRepository generateIncidenceExpirationNotifications,
-            INotificationsRepository getNotificationsPush,
+        public NotificationsHostedService(
+            IHubContext<NotificationsHub> notificationsHub,             
             IConfiguration configuration,
-            IDeleteNotificationPushRepository deleteNotificationPush )
+            INotificationRepository notificationRepository)
         {
-            _notificationsHub = notificationsHub;
-            _generateIncidenceExpirationNotifications = generateIncidenceExpirationNotifications;
+            _notificationsHub = notificationsHub;        
             _configuration = configuration;
-            _deleteNotificationPush = deleteNotificationPush;
+            _notificationRepository = notificationRepository;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(GenerateNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(int.Parse(_configuration["HostService:TimeFrameGenerateNotificationSeconds"])));
+            _timer = new Timer(GenerateIncidenceExpirationNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(int.Parse(_configuration["HostService:TimeFrameGenerateNotificationSeconds"])));
 
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _executingTask = Task.Run(() => ListenForNotifications(_cts.Token));
@@ -49,10 +46,10 @@ namespace signalR.HostedServices
             return Task.CompletedTask;
         }
 
-        private void GenerateNotifications(object state)
+        private void GenerateIncidenceExpirationNotifications(object state)
         {
-              // se ejecuta periodicamente para crear notificaciones de inicidencias que estan a punto de vencer
-            _generateIncidenceExpirationNotifications.SpGenerateIncidenceExpirationNotifications();         
+            // se ejecuta periodicamente para crear notificaciones de inicidencias que estan a punto de vencer
+            _notificationRepository.GenerateIncidenceExpirationNotifications();
         }
 
         private async Task ListenForNotifications(CancellationToken cancellationToken)
@@ -67,22 +64,24 @@ namespace signalR.HostedServices
 
             connection.Notification += async (o, e) =>
             {
-                Console.WriteLine($"Notificación recibida: {e.Payload}");        
+                Console.WriteLine($"Notificación recibida: {e.Payload}");
 
                 //se obtienen los clientes activos 
-                List<ClientActive> listClientsActives = NotificationsHub.GetConnectedClient();          
+                List<ClientActive> listClientsActives = NotificationsHub.GetConnectedClient();
 
-                string[] InformationNotificationSend =  e.Payload.Split("*~*");        
-                
+                //[0]= usuario a  quien va dirigida la notificacion   
+                //[1]= id de la notificacion que posterior mente se tiene que eliminar de la tabla de notificaciones push
+                //[2]= json que tiene informacion de la notificacion
+                string[] InformationNotificationSend = e.Payload.Split("*~*");
+
                 // busca las sesiones que tiene activas un usuario, que un usuario puedo estar conectado desde difentes dispositivos
-                List <ClientActive> listClientActives = listClientsActives.Where(c => c.clientName == InformationNotificationSend[0]).ToList();
+                List<ClientActive> listClientActives = listClientsActives.Where(c => c.clientName == InformationNotificationSend[0]).ToList();
 
-                if (listClientActives.Count != 0) {
-                    foreach (var clientActive in listClientActives) {
-                        await _notificationsHub.Clients.Client(clientActive.ConnectionId).SendAsync(_configuration["Hub:MethodClient"], InformationNotificationSend[2]);
-                        _deleteNotificationPush.DeleteNotificationsPushSent(int.Parse(InformationNotificationSend[1]));
-                    }              
-                }
+                foreach (var clientActive in listClientActives)
+                {
+                    await _notificationsHub.Clients.Client(clientActive.ConnectionId).SendAsync(_configuration["Hub:MethodClient"], InformationNotificationSend[2]);
+                }            
+
             };
 
             while (!cancellationToken.IsCancellationRequested)
@@ -96,12 +95,12 @@ namespace signalR.HostedServices
         {
             _timer?.Change(Timeout.Infinite, 0);
 
-            _cts?.Cancel();     
+            _cts?.Cancel();
 
             // Espera a que la tarea termine o se detenga debido a la cancelación
             await Task.WhenAny(_executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
 
-            cancellationToken.ThrowIfCancellationRequested();           
+            cancellationToken.ThrowIfCancellationRequested();
         }
 
         public void Dispose()
