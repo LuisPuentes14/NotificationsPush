@@ -7,6 +7,7 @@ using signalR.Models.Local;
 using signalR.Repository.Implementation;
 using System;
 using System.Collections.Concurrent;
+using System.Text;
 using System.Text.Json;
 
 namespace signalR.SignalR
@@ -38,12 +39,21 @@ namespace signalR.SignalR
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            string user = Context.GetHttpContext()?.Request.Query["user"];
+            try
+            {
+                string user = Context.GetHttpContext()?.Request.Query["user"];
 
-            ClientActive clients = _users.Where(x => x.clientName == user && x.ConnectionId == Context.ConnectionId).FirstOrDefault();
-            _users.Remove(clients);
+                ClientActive clients = _users.Where(x => x.clientName == user && x.ConnectionId == Context.ConnectionId).FirstOrDefault();
+                _users.Remove(clients);
 
-            AppLogger.GetInstance().Info($"Cliente desconectado nombre :{clients.clientName}, id :{clients.ConnectionId} .");
+                AppLogger.GetInstance().Info($"Cliente desconectado nombre :{clients.clientName}, id :{clients.ConnectionId} .");
+
+            }
+            catch (Exception ex)
+            {
+                AppLogger.GetInstance().Info(ex.Message);
+            }
+            
 
             await base.OnDisconnectedAsync(exception);
         }     
