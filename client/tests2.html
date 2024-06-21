@@ -114,9 +114,9 @@
 
   <script>
 
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJBRE1JTiIsImVtYWlsIjoid2lsbGlhbXNhbmNoZXpAd3Bvc3MuY29tIiwidW5pcXVlX25hbWUiOiJXSUxMSUFNIEpPU0UgU0FOQ0hFWiBBTFZBUkVaIiwibmJmIjoxNzA5NTc4MjY3LCJleHAiOjE3MDk1Nzg4NjcsImlhdCI6MTcwOTU3ODI2NywiaXNzIjoiTm9tYnJlRW1pc29yIiwiYXVkIjoiTm9tYnJlQXVkaWVuY2lhIn0.Oi3PCBcHY06MlClmn6VC9BMk8FVnmdGP1OuePJslkt4';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJBRE1JTiIsImVtYWlsIjoiYWxlamFuZHJvYW5nZWxAZ21haWwuY29tIiwidW5pcXVlX25hbWUiOiJhbGVqYW5kcm8iLCJuYmYiOjE3MTg4Mzc1MzYsImV4cCI6MTcxODg3MTEzNiwiaWF0IjoxNzE4ODM3NTM2LCJpc3MiOiJXUE9TUyIsImF1ZCI6IlBPU1dQT1NTIn0.9Kakg44Xz2gdyXpt2TvohSyDAqeD_Q99KqpxyJ0aIDg';
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5400/notificationsHub?user=PASUY&access_token="+token)
+      .withUrl("http://localhost:5400/notificationsHub?serial=9220253140&access_token=" + token)
       .configureLogging(signalR.LogLevel.Information)
       .withAutomaticReconnect()
       .build();

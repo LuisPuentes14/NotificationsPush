@@ -18,17 +18,28 @@ namespace signalR.Controllers
         }
 
         [HttpPost("Authentication")]
-        public async Task< IActionResult> Authentication([FromBody] AuthenticationRequest authentication)
+        public async Task<IActionResult> Authentication([FromBody] UserRequest authentication)
         {
-
             // se transforma el obejeto que esta llegando al modelo local 
             User user = new User();
             user.password = authentication.password;
-            user.login = authentication.login;
+            user.user = authentication.user;
+            user.type = authentication.type;
 
-            AuthenticationResponse authenticationResponse = await  _uthenticationService.Authentication(user);
+            UserAuthenticated userAuthenticated = await _uthenticationService.Authentication(user);
 
-            return Ok(authenticationResponse);
+            GenericResponse<object> genericResponse =
+                new GenericResponse<object>(
+                    userAuthenticated.status,
+                    userAuthenticated.message,
+                    new 
+                    {
+                        token = userAuthenticated.token,
+                        minutesExpiresToken = userAuthenticated.minutesExpiresToken
+                    }
+                    );
+
+            return Ok(genericResponse);
 
         }
     }

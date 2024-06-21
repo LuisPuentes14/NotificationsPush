@@ -22,9 +22,9 @@ namespace signalR.Utils.JWT
                 var key = Encoding.ASCII.GetBytes(_configuration["JwtSettings:Secret"]);
 
                 List<Claim> claims = new List<Claim>() {
-                new Claim(ClaimTypes.NameIdentifier,user.login),
-                new Claim(ClaimTypes.Email, user.email),
-                new Claim(ClaimTypes.Name, user.name)
+                new Claim(ClaimTypes.NameIdentifier,user.user),
+                //new Claim(ClaimTypes.Email, user.email),
+                //new Claim(ClaimTypes.Name, user.name)
             };
 
                 var tokenDescriptor = new SecurityTokenDescriptor

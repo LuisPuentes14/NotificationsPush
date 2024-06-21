@@ -1,7 +1,8 @@
 ﻿namespace signalR.Models.Local
 {
-    public class Notification
+    public class SendNotification
     {
+        public List<string> terminal_serial { get; set; } = new List<string>();
         public Int64 notification_id { get; set; }
         public string icon { get; set; }
         public string picture { get; set; }

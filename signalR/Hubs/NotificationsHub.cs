@@ -28,7 +28,7 @@ namespace signalR.SignalR
 
         public override async Task OnConnectedAsync()
         {
-            var user = Context.GetHttpContext()?.Request.Query["user"];
+            var user = Context.GetHttpContext()?.Request.Query["serial"];
             ClientActive clientActive = new ClientActive() { clientName = user, ConnectionId = Context.ConnectionId };
             _users.Add(clientActive);
 
@@ -41,7 +41,7 @@ namespace signalR.SignalR
         {
             try
             {
-                string user = Context.GetHttpContext()?.Request.Query["user"];
+                string user = Context.GetHttpContext()?.Request.Query["serial"];
 
                 ClientActive clients = _users.Where(x => x.clientName == user && x.ConnectionId == Context.ConnectionId).FirstOrDefault();
                 _users.Remove(clients);

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace signalR.DTO.Response
+namespace signalR.Models.Local
 {
-    public class AuthenticationResponse
-    {
+    public class UserAuthenticated
+	{
         public bool status { get; set; }
         public string? message { get; set; }
         public string? token { get; set; }

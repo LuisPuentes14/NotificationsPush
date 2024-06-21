@@ -1,5 +1,4 @@
 ﻿using signalR.Services.Interfaces;
-using signalR.DTO.Response;
 using signalR.Models.Local;
 using signalR.Models.StoredProcedures;
 using signalR.Repository.Interfaces;
@@ -22,28 +21,25 @@ namespace signalR.Services
             _configuration = configuration;
         }
 
-        public async Task<AuthenticationResponse> Authentication(User user)
+        public async Task<UserAuthenticated> Authentication(User user)
         {
 
-            AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+            UserAuthenticated userAuthenticated = new UserAuthenticated();
 
-            user.password = SHA256Encryption.EncryptWithSHA256(user.password);          
+            user.password = SHA256Encryption.EncryptWithSHA256(user.password);
 
             SPValidateAuthenticationUser validateAuthenticationUser = await _authenticationRepository.ValidateAuthenticationUser(user);
 
             if (validateAuthenticationUser.status)
             {
-                user.email = validateAuthenticationUser.email;
-                user.name = validateAuthenticationUser.name;
-
-                authenticationResponse.token = _JWT.generateToken(user);
-                authenticationResponse.minutesExpiresToken = _configuration["JwtSettings:TimeLifeMinutes"];
+                userAuthenticated.token = _JWT.generateToken(user);
+                userAuthenticated.minutesExpiresToken = _configuration["JwtSettings:TimeLifeMinutes"];
             }
 
-            authenticationResponse.status = validateAuthenticationUser.status;
-            authenticationResponse.message = validateAuthenticationUser.message;
+            userAuthenticated.status = validateAuthenticationUser.status;
+            userAuthenticated.message = validateAuthenticationUser.message;
 
-            return authenticationResponse;
+            return userAuthenticated;
         }
     }
 }

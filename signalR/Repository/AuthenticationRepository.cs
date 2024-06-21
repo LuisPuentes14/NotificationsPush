@@ -5,6 +5,7 @@ using signalR.Models.Local;
 using signalR.Models.StoredProcedures;
 using signalR.Repository.Interfaces;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace signalR.Repository
 {
@@ -20,41 +21,27 @@ namespace signalR.Repository
         {
             SPValidateAuthenticationUser validateAuthenticationUser = new SPValidateAuthenticationUser();
 
-
-            try
-            {
-
-                using (var connecion = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]))
+                using (var connecion = new SqlConnection(_configuration["ConnectionStrings:SQLServer"]))
                 {
                     connecion.Open();
-                    using (var command = new NpgsqlCommand("validate_authentication_user", connecion))
+                    using (var command = new SqlCommand("sp_validate_user_notifications", connecion))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("in_user_login", user.login);
-                        command.Parameters.AddWithValue("in_password", user.password);
+                        command.Parameters.AddWithValue("in_name_user", user.user);
+                        command.Parameters.AddWithValue("in_passwor_user", user.password);
+                        command.Parameters.AddWithValue("in_type_user", user.type);
 
-                        command.Parameters.Add(new NpgsqlParameter("out_status", NpgsqlDbType.Boolean) { Direction = ParameterDirection.Output });
-                        command.Parameters.Add(new NpgsqlParameter("out_message", NpgsqlDbType.Text) { Direction = ParameterDirection.Output });
-                        command.Parameters.Add(new NpgsqlParameter("out_email", NpgsqlDbType.Text) { Direction = ParameterDirection.Output });
-                        command.Parameters.Add(new NpgsqlParameter("out_name", NpgsqlDbType.Text) { Direction = ParameterDirection.Output });
+                        command.Parameters.Add(new SqlParameter("status", SqlDbType.Bit) { Direction = ParameterDirection.Output });
+                        command.Parameters.Add(new SqlParameter("message", SqlDbType.VarChar, 500) { Direction = ParameterDirection.Output });                      
 
                         await command.ExecuteNonQueryAsync();
 
-                        validateAuthenticationUser.status = (bool) command.Parameters["out_status"].Value ;
-                        validateAuthenticationUser.message = command.Parameters["out_message"].Value.ToString();
-                        validateAuthenticationUser.email = command.Parameters["out_email"].Value.ToString();                       
-                        validateAuthenticationUser.name = command.Parameters["out_name"].Value.ToString();
+                        validateAuthenticationUser.status = (bool) command.Parameters["status"].Value;
+                        validateAuthenticationUser.message = command.Parameters["message"].Value.ToString();              
 
                     }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.Error.WriteLine(e.Message);
-                throw new Exception($"Error: {e.Message}");
-            }
+                }           
 
             return validateAuthenticationUser;
         }

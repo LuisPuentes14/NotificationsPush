@@ -5,6 +5,7 @@ using NpgsqlTypes;
 using signalR.Models.Local;
 using signalR.Models.StoredProcedures;
 using System.Data;
+using System.Data.SqlClient;
 using System.Reflection;
 
 namespace signalR
@@ -27,13 +28,13 @@ namespace signalR
         {
             try
             {
-                using (var connecion = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]))
+                using (var connecion = new SqlConnection(_configuration["ConnectionStrings:SQLServer"]))
                 {
                     connecion.Open();
                 }
                 AppLogger.GetInstance().Info("Conexion establecida correctamente a la base de datos.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 AppLogger.GetInstance().Info("Error conectando a la base de datos.");
                 Environment.Exit(1);

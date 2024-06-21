@@ -19,7 +19,7 @@
             // valida que la peticion hacia el websocket llege el parametro user y access_token 
 
             if (request.Path.StartsWithSegments("/notificationsHub", StringComparison.OrdinalIgnoreCase)&&
-                !request.Query.TryGetValue("user", out var user))
+                !request.Query.TryGetValue("serial", out var user))
             {
                 httpContext.Response.StatusCode = 400;
                 return;
