@@ -6,8 +6,7 @@ namespace signalR.Services.Interfaces
 {
     public interface INotificationsService
     {
-        Task<List<Notification>> GetNotifications(string serialTerminal);
-        Task<SPDeleteNotification> DeleteNotitification(string login, int notification_id);
+        Task<List<NotificationPending>> GetNotifications(string serialTerminal);       
         Task<SentTerminalsStatus> SendNotification(SendNotification sendNotificationRequest);
     }
 }

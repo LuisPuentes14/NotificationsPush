@@ -27,26 +27,17 @@ namespace signalR.Services
             _configuration = configuration;
         }
 
-        public async Task<List<Notification>> GetNotifications(string serialTerminal)
+        public async Task<List<NotificationPending>> GetNotifications(string serialTerminal)
         {
-            List<Notification> List = await _notificationsRespository.GetNotifications(serialTerminal);
+            List<NotificationPending> List = await _notificationsRespository.GetNotifications(serialTerminal);
             List<string> serials = new List<string>() { serialTerminal };
 
-
-            _notificationsRespository.UpdateSatusSentNotificationsTerminals(
-                Utils.Utils.LongsToDataTable(List.Select(x => x.notification_id).ToList()),
-                Utils.Utils.StringsToDataTable(serials),
-                out _
-                );
+            _notificationsRespository.DeleteNotificationsPending(
+                Utils.Utils.LongsToDataTable(List.Select(x => x.notification_pending_id).ToList()));
 
             return List;
         }
-
-
-        public async Task<SPDeleteNotification> DeleteNotitification(string login, int notification_id)
-        {
-            return await _notificationsRespository.DeleteNotification(notification_id, login);
-        }
+        
 
         public async Task<SentTerminalsStatus> SendNotification(SendNotification sendNotification)
         {
@@ -81,14 +72,7 @@ namespace signalR.Services
             {
                 await _notificationsHub.Clients.Client(item.clientId).SendAsync(_configuration["Hub:MethodClient"], notification);
             }
-
-            // se marca las notificaiones enviadas a cada terminal
-            _notificationsRespository.UpdateSatusSentNotificationsTerminals(
-               Utils.Utils.LongsToDataTable(new List<long> { notification.notification_id }),
-               Utils.Utils.StringsToDataTable(serialsTerminals),
-               out _
-               );
-
+           
             SentTerminalsStatus sentTerminalsStatus = new SentTerminalsStatus();
 
             // se obtiene el listdo de terminales que se les envio la notificación

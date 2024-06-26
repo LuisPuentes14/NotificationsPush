@@ -21,7 +21,7 @@ namespace signalR.HostedServices
     public class NotificationsHostedService : IHostedService, IDisposable
     {
 
-        private readonly IHubContext<NotificationsHub> _notificationsHub;   
+        private readonly IHubContext<NotificationsHub> _notificationsHub;
         private readonly IConfiguration _configuration;
         private readonly INotificationRepository _notificationRepository;
         private Timer _timer;
@@ -29,78 +29,96 @@ namespace signalR.HostedServices
         private Task _executingTask;
 
         public NotificationsHostedService(
-            IHubContext<NotificationsHub> notificationsHub,             
+            IHubContext<NotificationsHub> notificationsHub,
             IConfiguration configuration,
             INotificationRepository notificationRepository)
         {
-            _notificationsHub = notificationsHub;        
+            _notificationsHub = notificationsHub;
             _configuration = configuration;
             _notificationRepository = notificationRepository;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(GenerateIncidenceExpirationNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(int.Parse(_configuration["HostService:TimeFrameGenerateNotificationSeconds"])));
+            // Crea un Timer que no hace nada inicialmente y no tiene un periodo definido aún
+            Timer timer = new Timer(GetScheduledNotifications, null, Timeout.Infinite, Timeout.Infinite);
 
-            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _executingTask = Task.Run(() => ListenForNotifications(_cts.Token));
+            // Calcula cuánto tiempo falta para la próxima hora en punto
+            DateTime now = DateTime.Now;
+            DateTime nextHour = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0).AddHours(int.Parse(_configuration["HostService:TimeFrameNotificationHours"]));
+            TimeSpan delay = nextHour - now;
 
+            // Configura el temporizador para que se active en la próxima hora en punto y luego cada hora
+            timer.Change(delay, TimeSpan.FromHours(int.Parse(_configuration["HostService:TimeFrameNotificationHours"])));            
+
+            AppLogger.GetInstance().Info($"Timer configurado para iniciar a las: : {nextHour}");
+       
             return Task.CompletedTask;
         }
 
-        private void GenerateIncidenceExpirationNotifications(object state)
+        private async void GetScheduledNotifications(object state)
         {
-            // se ejecuta periodicamente para crear notificaciones de inicidencias que estan a punto de vencer
-            _notificationRepository.GenerateIncidenceExpirationNotifications();
-        }
+            // se ejecuta periodicamente para obtener las notificaciones programadas
+            List<NotificationScheduled> notificationScheduleds =
+                await _notificationRepository.GetScheduledNotifications();
 
-        private async Task ListenForNotifications(CancellationToken cancellationToken)
-        {
-            try
+            // si  no hay notificaciones para enviar omite el proceso
+            if (notificationScheduleds.Count() == 0) {
+                AppLogger.GetInstance().Info($"No ahi notificaciones programadas para enviar.");
+                return;
+            } 
+
+            // obtiene los clientes activos
+            List<ClientActive> listClientsActives = NotificationsHub.GetConnectedClient();
+
+            // obtiene un listado de terminales que estan conectados
+            var resultado = from terminal in notificationScheduleds
+                            join client in listClientsActives
+                            on terminal.terminal_serial equals client.clientName
+                            into deptGroup
+                            from dept in deptGroup.DefaultIfEmpty()
+                            select new
+                            {
+                                clientId = dept?.ConnectionId ?? "NO_CONECTADO",
+                                serial_terminal = terminal.terminal_serial,
+                                notification_id = terminal.notification_id,
+                                notification_schedule_id = terminal.notification_schedule_id,
+                                icon = terminal.icon,
+                                picture = terminal.picture,
+                                title = terminal.title,
+                                description = terminal.description,
+                            };
+
+            // Envia la notificacion a termiunales que estan conectados
+            foreach (var item in resultado.Where(x => x.clientId != "NO_CONECTADO"))
             {
-                using var connection = new NpgsqlConnection(_configuration["ConnectionStrings:Postgres"]);
-                await connection.OpenAsync(cancellationToken);
-
-                using (var command = new NpgsqlCommand("LISTEN chanel_send_notification_push;", connection))
-                {
-                    await command.ExecuteNonQueryAsync(cancellationToken);
-                }
-
-                connection.Notification += async (o, e) =>
-                {
-                    Console.WriteLine($"Notificación recibida: {e.Payload}");
-
-                    //se obtienen los clientes activos 
-                    List<ClientActive> listClientsActives = NotificationsHub.GetConnectedClient();
-
-                    //[0]= usuario a  quien va dirigida la notificacion   
-                    //[1]= id de la notificacion que posterior mente se tiene que eliminar de la tabla de notificaciones push
-                    //[2]= json que tiene informacion de la notificacion
-                    string[] InformationNotificationSend = e.Payload.Split("*~*");
-
-                    // busca las sesiones que tiene activas un usuario, que un usuario puedo estar conectado desde difentes dispositivos
-                    List<ClientActive> listClientActives = listClientsActives.Where(c => c.clientName == InformationNotificationSend[0]).ToList();
-
-                    foreach (var clientActive in listClientActives)
+                await _notificationsHub.Clients.Client(
+                    item.clientId).SendAsync(_configuration["Hub:MethodClient"],
+                    new Notification
                     {
-                        await _notificationsHub.Clients.Client(clientActive.ConnectionId).SendAsync(_configuration["Hub:MethodClient"], InformationNotificationSend[2]);
+                        notification_id = item.notification_id,
+                        icon = item.icon,
+                        picture = item.picture,
+                        title = item.title,
+                        description = item.description,
                     }
-
-                };
-
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    await connection.WaitAsync(cancellationToken);
-                }
-
+                    );
             }
-            catch (Exception ex)
-            {
-                AppLogger.GetInstance().Error(ex.Message);               
-            }
-            
+
+            var notificationSendTerminals = resultado
+                .Where(x => x.clientId != "NO_CONECTADO")
+                .Select(x =>
+                      new
+                      {
+                          x.notification_id,
+                          x.serial_terminal,
+                          x.notification_schedule_id
+                      }).ToList();
+
+            _notificationRepository.UpdateSatusSentNotificationsTerminals(Utils.Utils.ToDataTable(notificationSendTerminals));
+
+            AppLogger.GetInstance().Info($"Notificiones programadas enviadas.");
         }
-
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {

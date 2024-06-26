@@ -114,7 +114,7 @@
 
   <script>
 
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJBRE1JTiIsImVtYWlsIjoiYWxlamFuZHJvYW5nZWxAZ21haWwuY29tIiwidW5pcXVlX25hbWUiOiJhbGVqYW5kcm8iLCJuYmYiOjE3MTg4Mzc1MzYsImV4cCI6MTcxODg3MTEzNiwiaWF0IjoxNzE4ODM3NTM2LCJpc3MiOiJXUE9TUyIsImF1ZCI6IlBPU1dQT1NTIn0.9Kakg44Xz2gdyXpt2TvohSyDAqeD_Q99KqpxyJ0aIDg';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlZHdpbmNlc3BlZGVzIiwibmJmIjoxNzE5NDIyNjA4LCJleHAiOjE3MTk0NTYyMDgsImlhdCI6MTcxOTQyMjYwOCwiaXNzIjoiV1BPU1MiLCJhdWQiOiJQT1NXUE9TUyJ9.N1M7Hng11eKzTssE9F_z1KbMD4GE6zHkFsN37zikELY';
     const connection = new signalR.HubConnectionBuilder()
       .withUrl("http://localhost:5400/notificationsHub?serial=9220253140&access_token=" + token)
       .configureLogging(signalR.LogLevel.Information)

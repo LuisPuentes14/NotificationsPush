@@ -3,6 +3,7 @@ using signalR.Models.Local;
 using signalR.Models.StoredProcedures;
 using signalR.Repository.Interfaces;
 using signalR.Utils.JWT;
+using signalR.Utils.Encrypt;
 
 namespace signalR.Services
 {
@@ -24,6 +25,8 @@ namespace signalR.Services
         public async Task<UserAuthenticated> Authentication(User user)
         {
 
+            user.password = DecryptPassword(user.password);
+
             UserAuthenticated userAuthenticated = new UserAuthenticated();
 
             user.password = SHA256Encryption.EncryptWithSHA256(user.password);
@@ -40,6 +43,17 @@ namespace signalR.Services
             userAuthenticated.message = validateAuthenticationUser.message;
 
             return userAuthenticated;
+        }
+
+
+        private string DecryptPassword(string password)
+        {
+
+            return AesDecryption.Decrypt(
+                 Convert.FromBase64String(password),
+                 Convert.FromBase64String(_configuration["AES:Key"]),
+                 Convert.FromBase64String(_configuration["AES:IV"])
+                 );
         }
     }
 }

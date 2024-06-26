@@ -6,10 +6,10 @@ namespace signalR.Repository.Implementation
 {
     public interface INotificationRepository
     {
-        Task<List<Notification>> GetNotifications(string clientLogin);
-        Task<SPDeleteNotification> DeleteNotification(int id, string login);
-        void GenerateIncidenceExpirationNotifications();
-        bool UpdateSatusSentNotificationsTerminals(DataTable listNotificationsId, DataTable listTerminalsSerials, out string message);
+        Task<List<NotificationPending>> GetNotifications(string clientLogin);
+        void DeleteNotificationsPending(DataTable listNotificationsPending);
+        Task<List<NotificationScheduled>> GetScheduledNotifications();
+        void UpdateSatusSentNotificationsTerminals(DataTable listNotificationsPendingId );
 
     }
 }

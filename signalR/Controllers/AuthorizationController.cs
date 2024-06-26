@@ -4,6 +4,7 @@ using signalR.DTO.Request;
 using signalR.DTO.Response;
 using signalR.Models.Local;
 using signalR.Services.Interfaces;
+using signalR.Utils.Encrypt;
 
 namespace signalR.Controllers
 {
@@ -20,7 +21,7 @@ namespace signalR.Controllers
         [HttpPost("Authentication")]
         public async Task<IActionResult> Authentication([FromBody] UserRequest authentication)
         {
-            // se transforma el obejeto que esta llegando al modelo local 
+            // se transforma el obejeto que esta llegando al modelo local            
             User user = new User();
             user.password = authentication.password;
             user.user = authentication.user;
@@ -32,7 +33,7 @@ namespace signalR.Controllers
                 new GenericResponse<object>(
                     userAuthenticated.status,
                     userAuthenticated.message,
-                    new 
+                    new
                     {
                         token = userAuthenticated.token,
                         minutesExpiresToken = userAuthenticated.minutesExpiresToken

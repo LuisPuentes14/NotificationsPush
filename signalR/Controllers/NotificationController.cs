@@ -23,33 +23,17 @@ namespace signalR.Controllers
         public async Task<IActionResult> GetNotitifications( string serialTerminal)
         {
 
-            List<Notification> notifications = await _notificationsService.GetNotifications(serialTerminal);
+            List<NotificationPending> notifications = await _notificationsService.GetNotifications(serialTerminal);
 
-            GenericResponse<Notification> GenericResponse =
-               new GenericResponse<Notification>(
+            GenericResponse<NotificationPending> GenericResponse =
+               new GenericResponse<NotificationPending>(
                true,
                "Proceso exitoso.",
                null,
                notifications);
 
             return Ok(GenericResponse);
-        }
-
-        [HttpPost("DeleteNotification")]
-        public async Task<IActionResult> DeleteNotification([FromBody] DeleteNotitificationRequest deleteNotitification)
-        {
-
-            SPDeleteNotification sPDeleteNotification = await _notificationsService.DeleteNotitification(
-                deleteNotitification.login, deleteNotitification.notification_id);
-
-            DeleteNotitificationResponse deleteNotitificationResponse = new DeleteNotitificationResponse();
-
-            deleteNotitificationResponse.status = sPDeleteNotification.status;
-            deleteNotitificationResponse.message = sPDeleteNotification.message;
-
-
-            return Ok(deleteNotitificationResponse);
-        }
+        }      
 
 
         [HttpPost("SendNotification")]
