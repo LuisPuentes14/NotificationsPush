@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using Npgsql;
-using NpgsqlTypes;
-using signalR.Models.Local;
+﻿using signalR.Models.Local;
 using signalR.Models.StoredProcedures;
 using signalR.Repository.Interfaces;
 using System.Data;

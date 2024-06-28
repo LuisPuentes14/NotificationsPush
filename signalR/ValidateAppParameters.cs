@@ -1,12 +1,6 @@
-﻿using Microsoft.Extensions.Options;
-using midelware.Singleton.Logger;
-using Npgsql;
-using NpgsqlTypes;
-using signalR.Models.Local;
-using signalR.Models.StoredProcedures;
-using System.Data;
+﻿using midelware.Singleton.Logger;
 using System.Data.SqlClient;
-using System.Reflection;
+
 
 namespace signalR
 {

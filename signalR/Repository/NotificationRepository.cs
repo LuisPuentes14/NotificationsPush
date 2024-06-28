@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Formatters;
-using midelware.Singleton.Logger;
-using Newtonsoft.Json;
-using Npgsql;
-using Npgsql.Replication;
-using NpgsqlTypes;
+﻿using midelware.Singleton.Logger;
 using signalR.Models.Local;
-using signalR.Models.StoredProcedures;
 using signalR.Repository.Implementation;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 

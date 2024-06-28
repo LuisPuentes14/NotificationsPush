@@ -1,14 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using midelware.Singleton.Logger;
-using Newtonsoft.Json;
-using Npgsql;
 using signalR.Models.Local;
-using signalR.Repository;
 using signalR.Repository.Implementation;
 using signalR.SignalR;
-using System;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 
 namespace signalR.HostedServices
@@ -51,7 +45,7 @@ namespace signalR.HostedServices
             // Configura el temporizador para que se active en la próxima hora en punto y luego cada hora
             timer.Change(delay, TimeSpan.FromHours(int.Parse(_configuration["HostService:TimeFrameNotificationHours"])));            
 
-            AppLogger.GetInstance().Info($"Timer configurado para iniciar a las: : {nextHour}");
+            AppLogger.GetInstance().Info($"Timer configurado para iniciar a las: {nextHour} y se ejecutara cada {_configuration["HostService:TimeFrameNotificationHours"]} horas.");
        
             return Task.CompletedTask;
         }
@@ -94,15 +88,15 @@ namespace signalR.HostedServices
             {
                 await _notificationsHub.Clients.Client(
                     item.clientId).SendAsync(_configuration["Hub:MethodClient"],
-                    new Notification
+                    JsonSerializer.Serialize( new Notification
                     {
                         notification_id = item.notification_id,
                         icon = item.icon,
                         picture = item.picture,
                         title = item.title,
                         description = item.description,
-                    }
-                    );
+                    })
+                    ); 
             }
 
             var notificationSendTerminals = resultado

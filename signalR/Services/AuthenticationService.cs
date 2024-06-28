@@ -29,7 +29,9 @@ namespace signalR.Services
 
             UserAuthenticated userAuthenticated = new UserAuthenticated();
 
-            user.password = SHA256Encryption.EncryptWithSHA256(user.password);
+            if (user.type == "USER") {
+                user.password = SHA256Encryption.EncryptWithSHA256(user.password);
+            }           
 
             SPValidateAuthenticationUser validateAuthenticationUser = await _authenticationRepository.ValidateAuthenticationUser(user);
 

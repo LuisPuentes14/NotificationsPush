@@ -10,6 +10,7 @@ using signalR.SignalR;
 using signalR.Utils;
 using System.Collections.Generic;
 using System.Data;
+using System.Text.Json;
 
 namespace signalR.Services
 {
@@ -37,12 +38,13 @@ namespace signalR.Services
 
             return List;
         }
-        
+
 
         public async Task<SentTerminalsStatus> SendNotification(SendNotification sendNotification)
         {
 
-            List<ClientActive> listClientsActives = NotificationsHub.GetConnectedClient();
+            List<ClientActive> listClientsActives = new List<ClientActive>();
+            listClientsActives = NotificationsHub.GetConnectedClient();
 
             List<string> serialsTerminals = sendNotification.terminal_serial;
 
@@ -70,9 +72,9 @@ namespace signalR.Services
             // Envia la notificacion a termiunales que estan conectados
             foreach (var item in resultado.Where(x => x.clientId != "NO_CONECTADO"))
             {
-                await _notificationsHub.Clients.Client(item.clientId).SendAsync(_configuration["Hub:MethodClient"], notification);
+                await _notificationsHub.Clients.Client(item.clientId).SendAsync(_configuration["Hub:MethodClient"], JsonSerializer.Serialize(notification));
             }
-           
+
             SentTerminalsStatus sentTerminalsStatus = new SentTerminalsStatus();
 
             // se obtiene el listdo de terminales que se les envio la notificación
