@@ -1,6 +1,5 @@
 ﻿using signalR.DTO.Request;
 using signalR.Models.Local;
-using signalR.Models.StoredProcedures;
 
 namespace signalR.Services.Interfaces
 {

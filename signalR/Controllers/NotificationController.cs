@@ -2,7 +2,6 @@
 using signalR.DTO.Request;
 using signalR.DTO.Response;
 using signalR.Models.Local;
-using signalR.Models.StoredProcedures;
 using signalR.Services.Interfaces;
 
 namespace signalR.Controllers

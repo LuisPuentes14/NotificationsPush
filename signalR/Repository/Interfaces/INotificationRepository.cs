@@ -1,5 +1,4 @@
 ﻿using signalR.Models.Local;
-using signalR.Models.StoredProcedures;
 using System.Data;
 
 namespace signalR.Repository.Implementation
