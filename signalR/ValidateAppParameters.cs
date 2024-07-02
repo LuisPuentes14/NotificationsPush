@@ -30,7 +30,7 @@ namespace signalR
             }
             catch (Exception ex)
             {
-                AppLogger.GetInstance().Info("Error conectando a la base de datos.");
+                AppLogger.GetInstance().Info($"Error conectando a la base de datos:{ex}");
                 Environment.Exit(1);
             }
         }
