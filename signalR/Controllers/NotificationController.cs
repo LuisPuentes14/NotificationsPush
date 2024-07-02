@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using signalR.DTO.Request;
 using signalR.DTO.Response;
 using signalR.Models.Local;
@@ -8,7 +9,7 @@ namespace signalR.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    // [Authorize]
+    [Authorize]
     public class NotificationController : ControllerBase
     {
         private readonly INotificationsService _notificationsService;
@@ -17,9 +18,9 @@ namespace signalR.Controllers
         {
             _notificationsService = notificationsService;
         }
-       
+
         [HttpGet("GetNotitificationsPending/{serialTerminal}")]
-        public async Task<IActionResult> GetNotitificationsPending( string serialTerminal)
+        public async Task<IActionResult> GetNotitificationsPending(string serialTerminal)
         {
 
             List<NotificationPending> notifications = await _notificationsService.GetNotitificationsPending(serialTerminal);
@@ -32,7 +33,7 @@ namespace signalR.Controllers
                notifications);
 
             return Ok(GenericResponse);
-        }      
+        }
 
 
         [HttpPost("SendNotification")]
