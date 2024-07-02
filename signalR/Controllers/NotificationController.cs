@@ -19,11 +19,11 @@ namespace signalR.Controllers
             _notificationsService = notificationsService;
         }
        
-        [HttpGet("GetNotitifications/{serialTerminal}")]
-        public async Task<IActionResult> GetNotitifications( string serialTerminal)
+        [HttpGet("GetNotitificationsPending/{serialTerminal}")]
+        public async Task<IActionResult> GetNotitificationsPending( string serialTerminal)
         {
 
-            List<NotificationPending> notifications = await _notificationsService.GetNotifications(serialTerminal);
+            List<NotificationPending> notifications = await _notificationsService.GetNotitificationsPending(serialTerminal);
 
             GenericResponse<NotificationPending> GenericResponse =
                new GenericResponse<NotificationPending>(

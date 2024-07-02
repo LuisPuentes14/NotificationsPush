@@ -14,7 +14,7 @@ namespace signalR.Repository
             _configuration = configuration;
         }
 
-        public async Task<List<NotificationPending>> GetNotifications(string serialTerminal)
+        public async Task<List<NotificationPending>> GetNotitificationsPending(string serialTerminal)
         {
             List<NotificationPending> list = new List<NotificationPending>();
 
@@ -96,7 +96,7 @@ namespace signalR.Repository
         }
 
 
-        public void UpdateSatusSentNotificationsTerminals(DataTable listNotificationsTerminalsSerialsSchedules)
+        public void SavePendingTerminalNotifications(DataTable listNotificationsTerminalsSerialsSchedules)
         {
            
             try
@@ -104,7 +104,7 @@ namespace signalR.Repository
                 using (var connecion = new SqlConnection(_configuration["ConnectionStrings:SQLServer"]))
                 {
                     connecion.Open();
-                    using (var command = new SqlCommand("sp_update_status_sent_notifications_terminals", connecion))
+                    using (var command = new SqlCommand("sp_save_pending_terminal_notifications", connecion))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;                      
 

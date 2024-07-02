@@ -28,9 +28,9 @@ namespace signalR.Services
             _configuration = configuration;
         }
 
-        public async Task<List<NotificationPending>> GetNotifications(string serialTerminal)
+        public async Task<List<NotificationPending>> GetNotitificationsPending(string serialTerminal)
         {
-            List<NotificationPending> List = await _notificationsRespository.GetNotifications(serialTerminal);
+            List<NotificationPending> List = await _notificationsRespository.GetNotitificationsPending(serialTerminal);
             List<string> serials = new List<string>() { serialTerminal };
 
             _notificationsRespository.DeleteNotificationsPending(

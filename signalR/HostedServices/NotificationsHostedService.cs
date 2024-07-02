@@ -100,7 +100,7 @@ namespace signalR.HostedServices
             }
 
             var notificationSendTerminals = resultado
-                .Where(x => x.clientId != "NO_CONECTADO")
+                .Where(x => x.clientId == "NO_CONECTADO")
                 .Select(x =>
                       new
                       {
@@ -109,7 +109,7 @@ namespace signalR.HostedServices
                           x.notification_schedule_id
                       }).ToList();
 
-            _notificationRepository.UpdateSatusSentNotificationsTerminals(Utils.Utils.ToDataTable(notificationSendTerminals));
+            _notificationRepository.SavePendingTerminalNotifications(Utils.Utils.ToDataTable(notificationSendTerminals));
 
             AppLogger.GetInstance().Info($"Notificiones programadas enviadas.");
         }
