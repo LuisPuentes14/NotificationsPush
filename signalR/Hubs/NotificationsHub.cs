@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.SignalR;
 using midelware.Singleton.Logger;
 using signalR.Models.Local;
+using System.Collections.Concurrent;
 
 namespace signalR.SignalR
 {
     [Authorize]
     public class NotificationsHub : Hub
-    {
-
-        private static List<ClientActive> _users = new List<ClientActive>();
+    {      
+        private static ConcurrentDictionary<string, ClientActive> _users = new ConcurrentDictionary<string, ClientActive>();
 
         public NotificationsHub() { }
 
@@ -21,12 +21,20 @@ namespace signalR.SignalR
 
         public override async Task OnConnectedAsync()
         {
-            var user = Context.GetHttpContext()?.Request.Query["serial"];
-            ClientActive clientActive = new ClientActive() { clientName = user, ConnectionId = Context.ConnectionId };
-            _users.Add(clientActive);
+            try
+            {
+                var user = Context.GetHttpContext()?.Request.Query["serial"];
+                ClientActive clientActive = new ClientActive() { clientName = user, ConnectionId = Context.ConnectionId };
+                _users.TryAdd(Context.ConnectionId, clientActive);
 
-            AppLogger.GetInstance().Info($"Cliente conectado nombre :{clientActive.clientName}, id :{clientActive.ConnectionId} .");
-            AppLogger.GetInstance().Info($"Numero de clientes conectados :{_users.Count()}");
+                AppLogger.GetInstance().Info($"Cliente conectado nombre :{clientActive.clientName}, id :{clientActive.ConnectionId} .");
+                AppLogger.GetInstance().Info($"Numero de clientes conectados :{_users.Count()}");
+            }
+            catch (Exception ex)
+            {
+
+                AppLogger.GetInstance().Error(ex.Message);
+            }
 
             await base.OnConnectedAsync();
         }
@@ -36,30 +44,22 @@ namespace signalR.SignalR
             try
             {
                 string user = Context.GetHttpContext()?.Request.Query["serial"];
+                _users.TryRemove(Context.ConnectionId, out ClientActive clientActive);
 
-                ClientActive clients = _users.Where( x => x != null && x.clientName == user && x.ConnectionId == Context.ConnectionId).FirstOrDefault();
-
-                if (clients is not null)
-                {
-                    _users.Remove(clients);
-                    AppLogger.GetInstance().Info($"Cliente desconectado nombre :{clients.clientName}, id :{clients.ConnectionId} .");
-                }
-
+                AppLogger.GetInstance().Info($"Cliente desconectado nombre :{user}, id :{Context.ConnectionId} .");
+                AppLogger.GetInstance().Info($"Numero de clientes conectados :{_users.Count()}");
             }
             catch (Exception ex)
             {
-                AppLogger.GetInstance().Info(ex.Message);
+                AppLogger.GetInstance().Error(ex.Message);
             }
-
-            AppLogger.GetInstance().Info($"Numero de clientes conectados :{_users.Count()}");
-
 
             await base.OnDisconnectedAsync(exception);
         }
 
         public static List<ClientActive> GetConnectedClient()
-        {
-            return _users;
+        {           
+            return _users.Select(x => x.Value).ToList();
         }
 
     }
