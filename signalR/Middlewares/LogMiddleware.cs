@@ -71,7 +71,7 @@ namespace midelware.Middlewares
                         stringBuilder.AppendLine($"------------------------------------------------------------");
                         AppLogger.GetInstance().Info(stringBuilder.ToString());
 
-                        Console.WriteLine(stringBuilder.ToString());
+                        //Console.WriteLine(stringBuilder.ToString());
 
                         return; // Detiene la ejecución del middleware
                     }
@@ -105,7 +105,7 @@ namespace midelware.Middlewares
 
                 // Registra la transaccion en el log
                 AppLogger.GetInstance().Info(stringBuilder.ToString());
-                Console.WriteLine(stringBuilder.ToString());
+                //Console.WriteLine(stringBuilder.ToString());
 
                 // Copiando de nuevo el stream de respuesta al original
                 await responseBodyStream.CopyToAsync(originalBodyStream);
@@ -122,7 +122,7 @@ namespace midelware.Middlewares
                 stringBuilder.AppendLine($"_______________________________________");
                 stringBuilder.AppendLine($"status code: {context.Response.StatusCode}");
                 stringBuilder.AppendLine($"------------------------------------------------------------");
-                Console.WriteLine(stringBuilder.ToString());
+                //Console.WriteLine(stringBuilder.ToString());
 
                 AppLogger.GetInstance().Error(stringBuilder.ToString());
                 return;

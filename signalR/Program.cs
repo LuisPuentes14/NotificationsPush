@@ -7,9 +7,6 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using signalR.Middleware;
 using midelware.Middlewares;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.Extensions.Configuration;
-using System;
 using NLog.Web;
 using signalR;
 

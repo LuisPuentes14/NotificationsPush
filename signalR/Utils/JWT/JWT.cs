@@ -43,7 +43,7 @@ namespace signalR.Utils.JWT
             }
             catch (Exception e)
             {
-               Console.Error.WriteLine(e.Message);
+               //Console.Error.WriteLine(e.Message);
 
                 return null;
             }

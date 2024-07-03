@@ -17,7 +17,7 @@ namespace signalR
                                                                                                                      "
             ;
 
-            Console.WriteLine( $"{banner}");
+            //Console.WriteLine( $"{banner}");
             AppLogger.GetInstance().Info(banner);
         }
     }
