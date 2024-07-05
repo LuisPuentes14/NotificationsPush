@@ -1,0 +1,335 @@
+<mxfile host="app.diagrams.net" modified="2024-07-04T16:17:10.822Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0" etag="Y2NQrIom2tAdTIhdd3cw" version="24.4.9" type="device">
+  <diagram name="Página-1" id="hm6XJdYD1DddnwWLzc0n">
+    <mxGraphModel dx="2213" dy="1920" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-72" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-65" y="650" width="830" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-2" value="" style="image;sketch=0;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/mscae/App_Configuration.svg;" vertex="1" parent="1">
+          <mxGeometry x="352" y="250" width="122.45" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-3" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.artofdata.com/wp-content/uploads/2019/06/signalr-logo.png;" vertex="1" parent="1">
+          <mxGeometry x="215.36" y="279.3999999999999" width="64.64" height="61.2" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-4" value="" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.gear;" vertex="1" parent="1">
+          <mxGeometry x="300" y="410" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-5" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://cdn1.iconfinder.com/data/icons/coding-26/128/cloud-server-code-coding-program-programming-service-512.png;" vertex="1" parent="1">
+          <mxGeometry x="280" y="140" width="72" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-6" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.mobile_client;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="-150" y="279.4" width="40.5" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-7" value="" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.data;" vertex="1" parent="1">
+          <mxGeometry x="720" y="270" width="50" height="60.9" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-8" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-2" target="J5GGBwOL6X-I4Htb1NBQ-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="230" as="sourcePoint" />
+            <mxPoint x="490" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-2" target="J5GGBwOL6X-I4Htb1NBQ-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="260" as="sourcePoint" />
+            <mxPoint x="352" y="222" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-10" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.294;exitY=1.017;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-2" target="J5GGBwOL6X-I4Htb1NBQ-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="430" as="sourcePoint" />
+            <mxPoint x="480" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-11" value="HostedService" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="280" y="100" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-12" value="WebSocket" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="215.36" y="240" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-13" value="API" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="300" y="480" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-14" value="Client" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="-159.75" y="240" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-15" value="Client" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="-159.75" y="240" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-16" value="Data Base" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="700" y="230" width="95" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-17" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#b0e3e6;strokeColor=#0e8088;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-6" target="J5GGBwOL6X-I4Htb1NBQ-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-99.75" y="450" as="sourcePoint" />
+            <mxPoint x="-49.75" y="400" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-120" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-18" value="El POS se autentica" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-30" y="410" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-20" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#b0e3e6;strokeColor=#0e8088;" edge="1" parent="1" target="J5GGBwOL6X-I4Htb1NBQ-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="450" as="sourcePoint" />
+            <mxPoint x="240" y="490" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="80" y="450" />
+              <mxPoint x="-130" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-21" value="El pregunta si tienen notificaciones pendientes" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-45" y="510" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-22" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#d0cee2;strokeColor=#56517e;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-6" target="J5GGBwOL6X-I4Htb1NBQ-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-250" y="320" as="sourcePoint" />
+            <mxPoint x="330" y="540" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-270" y="311" />
+              <mxPoint x="-270" y="540" />
+              <mxPoint x="330" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-23" value="El POS recibe token de autenticación" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-45" y="450" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-25" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#d0cee2;strokeColor=#56517e;" edge="1" parent="1" target="J5GGBwOL6X-I4Htb1NBQ-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="310" y="520" as="sourcePoint" />
+            <mxPoint x="-280" y="240" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="310" y="550" />
+              <mxPoint y="550" />
+              <mxPoint x="-280" y="550" />
+              <mxPoint x="-280" y="295" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-26" value="Retorna las notifcaciones pendientes" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-50" y="555" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-27" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#fad7ac;strokeColor=#b46504;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-6" target="J5GGBwOL6X-I4Htb1NBQ-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="170" y="310" as="sourcePoint" />
+            <mxPoint x="220" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-28" value="El POS se conecta WebSocket" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-30" y="270" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-29" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#fad9d5;strokeColor=#ae4132;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="210" y="330" as="sourcePoint" />
+            <mxPoint x="-110" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-30" value="El WebSocket envia notificaciones en tipo real&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-65" y="340" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-31" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#b0e3e6;strokeColor=#0e8088;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="450" as="sourcePoint" />
+            <mxPoint x="740" y="350" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="740" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-32" value="valida que el POS exista en la base de datos" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="410" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-33" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#b0e3e6;strokeColor=#0e8088;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="750" y="350" as="sourcePoint" />
+            <mxPoint x="370" y="450" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="750" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-34" value="Retorna validación de la terminal en la base de datos" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="410" y="450" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-35" value="" style="endArrow=classic;html=1;rounded=0;entryX=1.1;entryY=0.821;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#d0cee2;strokeColor=#56517e;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-4" target="J5GGBwOL6X-I4Htb1NBQ-7">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="600" as="sourcePoint" />
+            <mxPoint x="810" y="300" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="410" y="560" />
+              <mxPoint x="810" y="560" />
+              <mxPoint x="810" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-36" value="busca las notificaciones pendientes en la base de datos" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="525" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-39" value="" style="endArrow=classic;html=1;rounded=0;exitX=1.14;exitY=0.525;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#d0cee2;strokeColor=#56517e;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-7" target="J5GGBwOL6X-I4Htb1NBQ-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="900" y="460" as="sourcePoint" />
+            <mxPoint x="380" y="570" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="820" y="302" />
+              <mxPoint x="820" y="570" />
+              <mxPoint x="600" y="570" />
+              <mxPoint x="400" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-40" value="Retorna las notificaciones encontradas" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="570" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-41" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#e3c800;strokeColor=#B09500;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="364" y="160" as="sourcePoint" />
+            <mxPoint x="770" y="220" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="770" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-42" value="El&amp;nbsp; websoket se ejeucta en horas en punto para obetner notificaciones programadas de los terminales" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="120" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-44" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#fad9d5;strokeColor=#ae4132;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="720" y="175.5" as="sourcePoint" />
+            <mxPoint x="380" y="175.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-45" value="obtiene las notificaciones programadas" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="190" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-46" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;fillColor=#fad9d5;strokeColor=#ae4132;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="100" y="160" as="sourcePoint" />
+            <mxPoint x="220" y="230" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="220" y="158" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-47" value="El hostedService envia las notificaciones al websoket, para enviar las notificaciones a los terminales conectados, si existen notificaciones a terminales que no estan conectados, guarda como notificaciones pendientes." style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-30" y="160" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-50" value="" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.pc;" vertex="1" parent="1">
+          <mxGeometry x="280" y="780" width="100" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-51" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#b0e3e6;strokeColor=#0e8088;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-50">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="770" as="sourcePoint" />
+            <mxPoint x="350" y="520" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="510" y="815" />
+              <mxPoint x="510" y="590" />
+              <mxPoint x="350" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-52" value="El usuario se autentica" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="510" y="710" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-53" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#b0e3e6;strokeColor=#0e8088;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="530" as="sourcePoint" />
+            <mxPoint x="390" y="800" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="340" y="600" />
+              <mxPoint x="500" y="600" />
+              <mxPoint x="500" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-54" value="El usuario recibe token de utenticación" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="410" y="680" width="74" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-55" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#fad9d5;strokeColor=#ae4132;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-50">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="170" y="810" as="sourcePoint" />
+            <mxPoint x="320" y="530" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="140" y="815" />
+              <mxPoint x="140" y="590" />
+              <mxPoint x="320" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-56" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#fad9d5;strokeColor=#ae4132;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="550" as="sourcePoint" />
+            <mxPoint x="270" y="800" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="330" y="600" />
+              <mxPoint x="150" y="600" />
+              <mxPoint x="150" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-58" value="El usuario envia la notificacion a las terminales indicadas" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="690" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-59" value="Responde a que terminales se les envio la notificacion y acules no&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="690" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-60" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#fad9d5;strokeColor=#ae4132;" edge="1" parent="1" source="J5GGBwOL6X-I4Htb1NBQ-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="180" y="400" as="sourcePoint" />
+            <mxPoint x="250" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-61" value="Envia las notificaciones a terminales conectados" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="120" y="370" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-62" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="370" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-63" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fad9d5;strokeColor=#ae4132;" vertex="1" parent="1">
+          <mxGeometry x="80" y="780" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-64" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+          <mxGeometry x="-85" y="260" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-65" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
+          <mxGeometry x="555" y="660" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-66" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d0cee2;strokeColor=#56517e;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="240" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-67" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="190" y="100" width="300" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-69" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Servicio&lt;/h1&gt;&lt;div&gt;El servicio se conforma de una API, HOSTEDSERVICE, UN WEBSOCKET en SignalR&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="226" y="-30" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-70" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-250" y="152" width="220" height="468" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-71" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Cliente&lt;/h1&gt;&lt;p&gt;El cliente en este caso que va a recibir las notificaciones en tiempo.&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-245" y="20" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-73" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Plataforma&lt;/h1&gt;&lt;div&gt;En cargada de enviar notificaciones en tiempo real a terminales y a un grupo de terminales, tambien puede programar envio de notificaciones en un rango de días y horas especificas&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-310" y="680" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-74" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="610" y="210" width="270" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-75" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Base de datos cliente&lt;/h1&gt;&lt;p&gt;La base de datos del cliente debe tener las tablas para la solcucion creada&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="890" y="220" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-76" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="110" y="-70" width="1010" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="J5GGBwOL6X-I4Htb1NBQ-77" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Servidor&lt;/h1&gt;&lt;div&gt;El servidor es que el contiene la solucion y los componentes necesarios&amp;nbsp;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="150" y="-190" width="180" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
