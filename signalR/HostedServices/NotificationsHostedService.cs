@@ -43,10 +43,10 @@ namespace signalR.HostedServices
             TimeSpan delay = nextHour - now;
 
             // Configura el temporizador para que se active en la próxima hora en punto y luego cada hora
-            timer.Change(delay, TimeSpan.FromHours(int.Parse(_configuration["HostService:TimeFrameNotificationHours"])));            
+            timer.Change(delay, TimeSpan.FromHours(int.Parse(_configuration["HostService:TimeFrameNotificationHours"])));
 
             AppLogger.GetInstance().Info($"Timer configurado para iniciar a las: {nextHour} y se ejecutara cada {_configuration["HostService:TimeFrameNotificationHours"]} horas.");
-       
+
             return Task.CompletedTask;
         }
 
@@ -57,13 +57,16 @@ namespace signalR.HostedServices
                 await _notificationRepository.GetScheduledNotifications();
 
             // si  no hay notificaciones para enviar omite el proceso
-            if (notificationScheduleds.Count() == 0) {
+            if (notificationScheduleds.Count() == 0)
+            {
                 AppLogger.GetInstance().Info($"No ahi notificaciones programadas para enviar.");
                 return;
-            } 
+            }
 
             // obtiene los clientes activos
-            List<ClientActive> listClientsActives = NotificationsHub.GetConnectedClient();
+            List<ClientActive> listClientsActives = new List<ClientActive>();
+            listClientsActives = NotificationsHub
+                .GetClientsConnected(notificationScheduleds.Select(x => x.terminal_serial).ToList());
 
             // obtiene un listado de terminales que estan conectados
             var resultado = from terminal in notificationScheduleds
@@ -86,17 +89,17 @@ namespace signalR.HostedServices
             // Envia la notificacion a termiunales que estan conectados
             foreach (var item in resultado.Where(x => x.clientId != "NO_CONECTADO"))
             {
-                await _notificationsHub.Clients.Client(
-                    item.clientId).SendAsync(_configuration["Hub:MethodClient"],
-                    JsonSerializer.Serialize( new Notification
-                    {
-                        notification_id = item.notification_id,
-                        icon = item.icon,
-                        picture = item.picture,
-                        title = item.title,
-                        description = item.description,
-                    })
-                    ); 
+                _notificationsHub.Clients.Client(
+                   item.clientId).SendAsync(_configuration["Hub:MethodClient"],
+                   JsonSerializer.Serialize(new Notification
+                   {
+                       notification_id = item.notification_id,
+                       icon = item.icon,
+                       picture = item.picture,
+                       title = item.title,
+                       description = item.description,
+                   })
+                   );
             }
 
             var notificationSendTerminals = resultado

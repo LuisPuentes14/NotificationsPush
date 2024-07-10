@@ -57,9 +57,19 @@ namespace signalR.SignalR
             await base.OnDisconnectedAsync(exception);
         }
 
-        public static List<ClientActive> GetConnectedClient()
+        public static List<ClientActive> GetAllClients()
         {           
             return _users.Select(x => x.Value).ToList();
+        }
+
+        public static List<ClientActive> GetClientsConnected(List<string> lisTerminalsSerials) {
+
+            return _users
+                .Select(x => x.Value)
+                .Where(x => lisTerminalsSerials.Contains(x.clientName))
+                .ToList();
+
+
         }
 
     }

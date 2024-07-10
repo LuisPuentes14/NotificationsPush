@@ -38,9 +38,9 @@ namespace signalR.Services
         {
 
             List<ClientActive> listClientsActives = new List<ClientActive>();
-            listClientsActives = NotificationsHub.GetConnectedClient();
 
             List<string> serialsTerminals = sendNotification.terminal_serial;
+            listClientsActives = NotificationsHub.GetClientsConnected(serialsTerminals);           
 
             Notification notification = new Notification
             {
@@ -63,11 +63,24 @@ namespace signalR.Services
                                 serial_terminal = terminal
                             };
 
+
+            //var tasks = new List<Task>();
+
             // Envia la notificacion a termiunales que estan conectados
             foreach (var item in resultado.Where(x => x.clientId != "NO_CONECTADO"))
             {
-                await _notificationsHub.Clients.Client(item.clientId).SendAsync(_configuration["Hub:MethodClient"], JsonSerializer.Serialize(notification));
+                // tasks.Add(
+                _notificationsHub
+                .Clients
+                .Client(item.clientId)
+                .SendAsync(
+                    _configuration["Hub:MethodClient"],
+                    JsonSerializer.Serialize(notification));
+                    //);
             }
+
+            // Esperar a que todas las tareas se completen
+            //await Task.WhenAll(tasks);
 
             SentTerminalsStatus sentTerminalsStatus = new SentTerminalsStatus();
 
