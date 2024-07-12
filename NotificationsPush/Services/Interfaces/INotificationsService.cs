@@ -1,11 +1,10 @@
-﻿using signalR.DTO.Request;
-using signalR.Models.Local;
+﻿using NotificationsPush.Models.Local;
 
-namespace signalR.Services.Interfaces
+namespace NotificationsPush.Services.Interfaces
 {
     public interface INotificationsService
     {
-        Task<List<NotificationPending>> GetNotitificationsPending(string serialTerminal);       
+        Task<List<NotificationPending>> GetNotitificationsPending(string serialTerminal);
         Task<SentTerminalsStatus> SendNotification(SendNotification sendNotificationRequest);
     }
 }

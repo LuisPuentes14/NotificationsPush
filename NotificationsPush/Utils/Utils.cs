@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Reflection;
 
-namespace signalR.Utils
+namespace NotificationsPush.Utils
 {
     public static class Utils
     {

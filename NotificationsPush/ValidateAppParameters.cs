@@ -1,9 +1,9 @@
-﻿using midelware.Singleton.Logger;
+﻿using NotificationsPush.Singleton.Logger;
 using System;
 using System.Data.SqlClient;
 
 
-namespace signalR
+namespace NotificationsPush
 {
     public class ValidateAppParameters
     {
@@ -58,7 +58,7 @@ namespace signalR
             {
                 Uri uriHttps = new Uri(urlHttps.Replace("*", "localhost"));
                 AppLogger.GetInstance().Info($"Escuchando en el puerto HTTPS :{uriHttps.Port}.");
-            }           
+            }
 
         }
 

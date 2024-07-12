@@ -1,11 +1,11 @@
-﻿using signalR.Repository;
-using signalR.Repository.Implementation;
-using signalR.Repository.Interfaces;
-using signalR.Utils.JWT;
-using signalR.Services;
-using signalR.Services.Interfaces;
+﻿using NotificationsPush.Repository.Interfaces;
+using NotificationsPush.Services;
+using NotificationsPush.Repository;
+using NotificationsPush.Utils.JWT;
+using NotificationsPush.Services.Interfaces;
+using NotificationsPush;
 
-namespace signalR.IOC
+namespace NotificationsPush.IOC
 {
     public static class Dependencies
     {
@@ -16,13 +16,13 @@ namespace signalR.IOC
             _configuration = configuration;
         }
 
-        public static void InyectarDependencia(this IServiceCollection services, IConfiguration Configuration)    
+        public static void InyectarDependencia(this IServiceCollection services, IConfiguration Configuration)
         {
             // Segregación de interfaces           
-            services.AddSingleton<ValidateAppParameters>();           
-            services.AddSingleton<INotificationRepository, NotificationRepository>();           
+            services.AddSingleton<ValidateAppParameters>();
+            services.AddSingleton<INotificationRepository, NotificationRepository>();
             services.AddSingleton<IJWT, JWT>();
-            services.AddScoped<IAuthenticationRepository, AuthenticationRepository>(); 
+            services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<INotificationsService, NotificationService>();
         }

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace signalR.Models.Local
+namespace NotificationsPush.Models.Local
 {
     public class UserAuthenticated
-	{
+    {
         public bool status { get; set; }
         public string? message { get; set; }
         public string? token { get; set; }

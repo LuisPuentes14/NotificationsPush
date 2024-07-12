@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using signalR.DTO.Request;
-using signalR.DTO.Response;
-using signalR.Models.Local;
-using signalR.Services.Interfaces;
+using NotificationsPush.DTO.Request;
+using NotificationsPush.DTO.Response;
+using NotificationsPush.Models.Local;
+using NotificationsPush.Services.Interfaces;
 
-namespace signalR.Controllers
+namespace NotificationsPush.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,6 +1,6 @@
 ﻿using NLog;
 
-namespace midelware.Singleton.Logger
+namespace NotificationsPush.Singleton.Logger
 {
     public class AppLogger : ILogger
     {
@@ -23,7 +23,7 @@ namespace midelware.Singleton.Logger
 
             if (logger == null)
             {
-                logger = NLog.LogManager.GetLogger(theLogger);
+                logger = LogManager.GetLogger(theLogger);
             };
 
             return logger;

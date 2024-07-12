@@ -1,11 +1,11 @@
-﻿using midelware.Singleton.Logger;
+﻿using NotificationsPush.Singleton.Logger;
 using System.Text;
 
-namespace signalR
+namespace NotificationsPush
 {
     public class BannerApp
     {
-       public static void GenerateBanner( )
+        public static void GenerateBanner()
         {
 
             string banner = @"

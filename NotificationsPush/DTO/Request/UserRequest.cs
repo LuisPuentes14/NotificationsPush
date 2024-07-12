@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace signalR.DTO.Request
+namespace NotificationsPush.DTO.Request
 {
     public class UserRequest
     {

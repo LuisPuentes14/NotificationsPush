@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using midelware.Singleton.Logger;
+using NotificationsPush.Singleton.Logger;
 using System.Buffers;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO.Pipelines;
@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Reflection.PortableExecutable;
 using System.Text;
 
-namespace midelware.Middlewares
+namespace NotificationsPush.Middlewares
 {
     public class LogMiddleware
     {

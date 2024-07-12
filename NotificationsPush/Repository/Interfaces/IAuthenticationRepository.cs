@@ -1,7 +1,7 @@
-﻿using signalR.Models.Local;
-using signalR.Models.StoredProcedures;
+﻿using NotificationsPush.Models.Local;
+using NotificationsPush.Models.StoredProcedures;
 
-namespace signalR.Repository.Interfaces
+namespace NotificationsPush.Repository.Interfaces
 {
     public interface IAuthenticationRepository
     {

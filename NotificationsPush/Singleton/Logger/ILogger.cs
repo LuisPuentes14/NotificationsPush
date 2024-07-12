@@ -1,4 +1,4 @@
-﻿namespace midelware.Singleton.Logger
+﻿namespace NotificationsPush.Singleton.Logger
 {
     public interface ILogger
     {

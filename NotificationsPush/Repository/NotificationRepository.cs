@@ -1,10 +1,10 @@
-﻿using midelware.Singleton.Logger;
-using signalR.Models.Local;
-using signalR.Repository.Implementation;
+﻿using NotificationsPush.Models.Local;
+using NotificationsPush.Repository.Interfaces;
+using NotificationsPush.Singleton.Logger;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace signalR.Repository
+namespace NotificationsPush.Repository
 {
     public class NotificationRepository : INotificationRepository
     {
@@ -23,7 +23,7 @@ namespace signalR.Repository
                 connecion.Open();
                 using (var command = new SqlCommand("sp_get_pending_notifications_terminal", connecion))
                 {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("in_terminal_serial", serialTerminal);
                     command.Parameters.Add(new SqlParameter("status", SqlDbType.Bit) { Direction = ParameterDirection.Output });
@@ -69,7 +69,7 @@ namespace signalR.Repository
                     connecion.Open();
                     using (var command = new SqlCommand("sp_delete_notifications_pending", connecion))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("list_notifications_pending", listNotificationsPending);
                         command.Parameters.Add(new SqlParameter("status", SqlDbType.Bit) { Direction = ParameterDirection.Output });
@@ -98,7 +98,7 @@ namespace signalR.Repository
 
         public void SavePendingTerminalNotifications(DataTable listNotificationsTerminalsSerialsSchedules)
         {
-           
+
             try
             {
                 using (var connecion = new SqlConnection(_configuration["ConnectionStrings:SQLServer"]))
@@ -106,7 +106,7 @@ namespace signalR.Repository
                     connecion.Open();
                     using (var command = new SqlCommand("sp_save_pending_terminal_notifications", connecion))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;                      
+                        command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("list_notifications_serials_terminals_schedules", listNotificationsTerminalsSerialsSchedules);
                         command.Parameters.Add(new SqlParameter("status", SqlDbType.Bit) { Direction = ParameterDirection.Output });
@@ -123,15 +123,15 @@ namespace signalR.Repository
                         }
 
                     }
-                  
+
                 }
             }
             catch (Exception e)
             {
                 AppLogger.GetInstance().Error($"Error sp_delete_notifications_pending: {e}");
-            } 
+            }
 
-           
+
         }
 
 
@@ -146,7 +146,7 @@ namespace signalR.Repository
                     connecion.Open();
                     using (var command = new SqlCommand("sp_get_notifications_scheduled_shipping", connecion))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.Add(new SqlParameter("status", SqlDbType.Bit) { Direction = ParameterDirection.Output });
                         command.Parameters.Add(new SqlParameter("message", SqlDbType.VarChar, 100) { Direction = ParameterDirection.Output });

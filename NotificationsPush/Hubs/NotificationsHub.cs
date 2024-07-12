@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using midelware.Singleton.Logger;
-using signalR.Models.Local;
+using NotificationsPush.Models.Local;
+using NotificationsPush.Singleton.Logger;
 using System.Collections.Concurrent;
 
-namespace signalR.SignalR
+namespace NotificationsPush.Hubs
 {
     [Authorize]
     public class NotificationsHub : Hub
-    {      
+    {
         private static ConcurrentDictionary<string, ClientActive> _users = new ConcurrentDictionary<string, ClientActive>();
 
         public NotificationsHub() { }
@@ -58,11 +58,12 @@ namespace signalR.SignalR
         }
 
         public static List<ClientActive> GetAllClients()
-        {           
+        {
             return _users.Select(x => x.Value).ToList();
         }
 
-        public static List<ClientActive> GetClientsConnected(List<string> lisTerminalsSerials) {
+        public static List<ClientActive> GetClientsConnected(List<string> lisTerminalsSerials)
+        {
 
             return _users
                 .Select(x => x.Value)

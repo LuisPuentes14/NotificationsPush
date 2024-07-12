@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace signalR.Utils.Encrypt
+namespace NotificationsPush.Utils.Encrypt
 {
 
     public class AesEncryption
@@ -22,7 +22,7 @@ namespace signalR.Utils.Encrypt
                         {
                             swEncrypt.Write(plainText);
                         }
-                        return (msEncrypt.ToArray());
+                        return msEncrypt.ToArray();
                     }
                 }
             }

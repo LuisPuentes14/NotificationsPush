@@ -1,9 +1,9 @@
-﻿namespace signalR.Models.Local
+﻿namespace NotificationsPush.Models.Local
 {
     public class NotificationScheduled
     {
-        public Int64 notification_id { get; set; }
-        public Int64 notification_schedule_id { get; set; }
+        public long notification_id { get; set; }
+        public long notification_schedule_id { get; set; }
         public string terminal_serial { get; set; }
         public string icon { get; set; }
         public string picture { get; set; }

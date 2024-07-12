@@ -1,8 +1,8 @@
-﻿namespace signalR.Models.Local
+﻿namespace NotificationsPush.Models.Local
 {
     public class Notification
     {
-        public Int64 notification_id { get; set; }
+        public long notification_id { get; set; }
         public string icon { get; set; }
         public string picture { get; set; }
         public string title { get; set; }

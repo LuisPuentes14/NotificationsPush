@@ -1,6 +1,6 @@
-﻿using signalR.Models.Local;
+﻿using NotificationsPush.Models.Local;
 
-namespace signalR.Utils.JWT
+namespace NotificationsPush.Utils.JWT
 {
     public interface IJWT
     {

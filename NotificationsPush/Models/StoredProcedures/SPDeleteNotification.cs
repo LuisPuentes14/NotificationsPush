@@ -1,4 +1,4 @@
-﻿namespace signalR.Models.StoredProcedures
+﻿namespace NotificationsPush.Models.StoredProcedures
 {
     public class SPDeleteNotification
     {

@@ -1,12 +1,12 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using signalR.Models.Local;
+using NotificationsPush.Models.Local;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace signalR.Utils.JWT
+namespace NotificationsPush.Utils.JWT
 {
-    public class JWT: IJWT
+    public class JWT : IJWT
     {
         private readonly IConfiguration _configuration;
         public JWT(IConfiguration configuration)
@@ -43,7 +43,7 @@ namespace signalR.Utils.JWT
             }
             catch (Exception e)
             {
-               //Console.Error.WriteLine(e.Message);
+                //Console.Error.WriteLine(e.Message);
 
                 return null;
             }

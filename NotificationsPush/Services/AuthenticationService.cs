@@ -1,11 +1,11 @@
-﻿using signalR.Services.Interfaces;
-using signalR.Models.Local;
-using signalR.Models.StoredProcedures;
-using signalR.Repository.Interfaces;
-using signalR.Utils.JWT;
-using signalR.Utils.Encrypt;
+﻿using NotificationsPush.Utils.Encrypt;
+using NotificationsPush.Repository.Interfaces;
+using NotificationsPush.Utils.JWT;
+using NotificationsPush.Models.Local;
+using NotificationsPush.Services.Interfaces;
+using NotificationsPush.Models.StoredProcedures;
 
-namespace signalR.Services
+namespace NotificationsPush.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
@@ -29,9 +29,10 @@ namespace signalR.Services
 
             UserAuthenticated userAuthenticated = new UserAuthenticated();
 
-            if (user.type == "USER") {
+            if (user.type == "USER")
+            {
                 user.password = SHA256Encryption.EncryptWithSHA256(user.password);
-            }           
+            }
 
             SPValidateAuthenticationUser validateAuthenticationUser = await _authenticationRepository.ValidateAuthenticationUser(user);
 

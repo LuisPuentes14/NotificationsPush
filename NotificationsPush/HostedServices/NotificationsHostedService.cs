@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using midelware.Singleton.Logger;
-using signalR.Models.Local;
-using signalR.Repository.Implementation;
-using signalR.SignalR;
+using NotificationsPush.Hubs;
+using NotificationsPush.Models.Local;
+using NotificationsPush.Repository.Interfaces;
+using NotificationsPush.Singleton.Logger;
 using System.Text.Json;
 
-namespace signalR.HostedServices
+namespace NotificationsPush.HostedServices
 {
 
     /// <summary>
@@ -78,12 +78,12 @@ namespace signalR.HostedServices
                             {
                                 clientId = dept?.ConnectionId ?? "NO_CONECTADO",
                                 serial_terminal = terminal.terminal_serial,
-                                notification_id = terminal.notification_id,
-                                notification_schedule_id = terminal.notification_schedule_id,
-                                icon = terminal.icon,
-                                picture = terminal.picture,
-                                title = terminal.title,
-                                description = terminal.description,
+                                terminal.notification_id,
+                                terminal.notification_schedule_id,
+                                terminal.icon,
+                                terminal.picture,
+                                terminal.title,
+                                terminal.description,
                             };
 
             // Envia la notificacion a termiunales que estan conectados

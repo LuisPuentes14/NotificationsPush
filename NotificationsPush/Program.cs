@@ -1,14 +1,13 @@
-using signalR.SignalR;
 using Microsoft.Extensions.Options;
-using signalR.HostedServices;
-using signalR.IOC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using signalR.Middleware;
-using midelware.Middlewares;
 using NLog.Web;
-using signalR;
+using NotificationsPush.Hubs;
+using NotificationsPush.Middlewares;
+using NotificationsPush;
+using NotificationsPush.HostedServices;
+using NotificationsPush.IOC;
 
 var builder = WebApplication.CreateBuilder(args);
 

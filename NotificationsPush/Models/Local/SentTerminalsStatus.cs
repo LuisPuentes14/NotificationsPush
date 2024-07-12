@@ -1,4 +1,4 @@
-﻿namespace signalR.Models.Local
+﻿namespace NotificationsPush.Models.Local
 {
     public class SentTerminalsStatus
     {

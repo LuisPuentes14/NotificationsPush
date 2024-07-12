@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using signalR.Models.Local;
-using signalR.Repository.Implementation;
-using signalR.Services.Interfaces;
-using signalR.SignalR;
+using NotificationsPush.Hubs;
+using NotificationsPush.Models.Local;
+using NotificationsPush.Repository.Interfaces;
+using NotificationsPush.Services.Interfaces;
 using System.Data;
 using System.Text.Json;
 
-namespace signalR.Services
+namespace NotificationsPush.Services
 {
     public class NotificationService : INotificationsService
     {
@@ -40,7 +40,7 @@ namespace signalR.Services
             List<ClientActive> listClientsActives = new List<ClientActive>();
 
             List<string> serialsTerminals = sendNotification.terminal_serial;
-            listClientsActives = NotificationsHub.GetClientsConnected(serialsTerminals);           
+            listClientsActives = NotificationsHub.GetClientsConnected(serialsTerminals);
 
             Notification notification = new Notification
             {
@@ -76,7 +76,7 @@ namespace signalR.Services
                 .SendAsync(
                     _configuration["Hub:MethodClient"],
                     JsonSerializer.Serialize(notification));
-                    //);
+                //);
             }
 
             // Esperar a que todas las tareas se completen

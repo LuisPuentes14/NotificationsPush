@@ -1,4 +1,4 @@
-﻿namespace signalR.Middleware
+﻿namespace NotificationsPush.Middlewares
 {
     /// <summary>
     /// Encargado de gestionar las peticion hacia el Hub (WebSocket)
@@ -18,7 +18,7 @@
 
             // valida que la peticion hacia el websocket llege el parametro user y access_token 
 
-            if (request.Path.StartsWithSegments("/notificationsHub", StringComparison.OrdinalIgnoreCase)&&
+            if (request.Path.StartsWithSegments("/notificationsHub", StringComparison.OrdinalIgnoreCase) &&
                 !request.Query.TryGetValue("serial", out var user))
             {
                 httpContext.Response.StatusCode = 400;

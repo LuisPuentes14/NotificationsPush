@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace signalR.Utils.Encrypt
+namespace NotificationsPush.Utils.Encrypt
 {
     public class AesDecryption
     {
