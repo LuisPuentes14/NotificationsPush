@@ -1,11 +1,11 @@
 
 ---instala el servicio
-sc create "notifications_push" binPath="C:\Users\aleja\OneDrive\Documents\signalR\NotificationsPush\bin\Release\net6.0\NotificationsPush.exe"
+sc create "NotificationsPush" binPath="C:\Users\aleja\OneDrive\Documents\signalR\NotificationsPush\bin\Release\net6.0\NotificationsPush.exe"
 
 ---inicia el servicio
-sc start "notifications_push"
+sc start "NotificationsPush"
 
 ---elimina el servicio
-sc delete "notifications_push"
+sc delete "NotificationsPush"
 
 
