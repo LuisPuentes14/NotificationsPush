@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -8,116 +7,126 @@ using NotificationsPush.Middlewares;
 using NotificationsPush;
 using NotificationsPush.HostedServices;
 using NotificationsPush.IOC;
+using Microsoft.AspNetCore.HttpsPolicy;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Convierte la aplicacion en servicio de windows
-builder.Host.UseWindowsService();
-
-// Add services to the container.
-builder.Services.AddControllers();
-
-
-var Issuer = builder.Configuration["JwtSettings:Issuer"];
-var Audience = builder.Configuration["JwtSettings:Audience"];
-var SecretKey = Encoding.ASCII.GetBytes(builder.Configuration["JwtSettings:Secret"]);
-
-builder.Services.AddAuthentication(d =>
+public partial class Program
 {
-    d.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    d.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-}).AddJwtBearer(d =>
-{
-
-    d.RequireHttpsMetadata = false;
-    d.SaveToken = false;
-    d.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    public async static Task Main(string[] args)
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(SecretKey),
-        ValidateIssuer = true,
-        ValidIssuer = Issuer,
-        ValidateAudience = true,
-        ValidAudience = Audience,
-        ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero
+        var builder = WebApplication.CreateBuilder(args);
 
-    };
-});
+        // Convierte la aplicacion en servicio de windows
+        builder.Host.UseWindowsService();
 
-builder.Services.AddSignalR();
+        // Configura NLog
+        //builder.Logging.ClearProviders();
+        builder.Host.UseNLog();
 
-builder.Services.InyectarDependencia(builder.Configuration);
+        // Agrega servicios a la contenedor
+        ConfigureServices(builder.Services, builder.Configuration);
 
-builder.Services.AddHostedService<NotificationsHostedService>();
+        // Construir aplicacion
+        var app = builder.Build();
 
-builder.Services.AddCors(options =>
-{
-    
-   var AllowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+        // Configura el pipeline de la aplicación
+        ConfigurePipeline(app);
 
-    options.AddDefaultPolicy(
-        builder =>
+        app.Run();
+    }
+
+    static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddControllers();
+        ConfigureAuthentication(services, configuration);
+        services.AddSignalR();
+        services.InyectarDependencia(configuration);
+        services.AddHostedService<NotificationsHostedService>();
+        ConfigureCors(services, configuration);
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+
+        // redirecciona la peticiones http a https al puerto configurado
+        //services.Configure<HttpsRedirectionOptions>(options =>
+        //{
+        //    var url = configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>();
+        //    Uri uri = new Uri(url);
+        //    options.HttpsPort = uri.Port;
+
+        //});
+    }
+
+    static void ConfigureAuthentication(IServiceCollection services, IConfiguration configuration)
+    {
+        var jwtSettings = configuration.GetSection("JwtSettings");
+        var issuer = jwtSettings["Issuer"];
+        var audience = jwtSettings["Audience"];
+        var secretKey = Encoding.ASCII.GetBytes(jwtSettings["Secret"]);
+
+        services.AddAuthentication(options =>
         {
-            builder.WithOrigins(AllowedOrigins)
-                .AllowAnyHeader()
-                .WithMethods("GET", "POST")
-                .AllowCredentials();
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = false;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+                ValidateAudience = true,
+                ValidAudience = audience,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
         });
-});
+    }
 
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// redirecciona la peticiones http a https al puerto configurado
-//builder.Services.Configure<HttpsRedirectionOptions>(options =>
-//{
-//    var url = builder.Configuration.GetSection("Kestrel:Endpoints:Https:Url").Get<string>();
-//    Uri uri = new Uri(url);   
-//    options.HttpsPort = uri.Port;
-
-//});
-
-//builder.Logging.ClearProviders();
-builder.Host.UseNLog();
-
+    static void ConfigureCors(IServiceCollection services, IConfiguration configuration)
+    {
+        var allowedOrigins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.WithOrigins(allowedOrigins)
+                    .AllowAnyHeader()
+                    .WithMethods("GET", "POST")
+                    .AllowCredentials();
+            });
+        });
+    }
 
 
-var app = builder.Build();
+    static void ConfigurePipeline(WebApplication app)
+    {
+        // Imprime el banner
+        BannerApp.GenerateBanner();
 
+        // Valida la conexión a la base de datos y otros parámetros
+        var miServicio = app.Services.GetRequiredService<ValidateAppParameters>();
+        miServicio.ValidateParameters();
 
+        // Configura el pipeline HTTP
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
-// imprime el banner 
-BannerApp.GenerateBanner();
-
-// valida la conexion a la base de datos y imprime el puerto con el que esta escuchando la app
-var miServicio = app.Services.GetRequiredService<ValidateAppParameters>();
-miServicio.ValidateParameters();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        app.UseMiddleware<WebSocketsMiddleware>();
+        app.UseMiddleware<LogMiddleware>();
+        app.UseHttpsRedirection();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseCors();
+        app.MapControllers();
+        app.MapHub<NotificationsHub>("/notificationsHub");
+    }
 }
 
-app.UseMiddleware<WebSocketsMiddleware>();
-app.UseMiddleware<LogMiddleware>();
 
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
-app.UseCors();
-
-app.MapControllers();
-
-app.MapHub<NotificationsHub>("/notificationsHub");
-
-app.Run();

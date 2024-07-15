@@ -19,8 +19,8 @@ namespace NotificationsPush.HostedServices
         private readonly IConfiguration _configuration;
         private readonly INotificationRepository _notificationRepository;
         private Timer _timer;
-        private CancellationTokenSource _cts;
-        private Task _executingTask;
+        // private CancellationTokenSource _cts;
+        // private Task _executingTask;
 
         public NotificationsHostedService(
             IHubContext<NotificationsHub> notificationsHub,
@@ -119,12 +119,12 @@ namespace NotificationsPush.HostedServices
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
+            // detiene el temporizador si está activo
             _timer?.Change(Timeout.Infinite, 0);
 
-            _cts?.Cancel();
-
+            // _cts?.Cancel();
             // Espera a que la tarea termine o se detenga debido a la cancelación
-            await Task.WhenAny(_executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
+            //await Task.WhenAny(_executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
 
             cancellationToken.ThrowIfCancellationRequested();
         }
